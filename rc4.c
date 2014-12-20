@@ -15,6 +15,21 @@ uint8_t* pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int key
 
 int main(int argc, const char *argv[])
 {
+   //static example of code use
+   //static inputs
+   uint8_t key[] = {'K', 'e', 'y'};
+   int keyLength = 3;
+   uint8_t permutationArray[permutationArrayLength];   
+   int outputLength = 20
+
+   //run RC4 algorithm
+   uint8_t* stream = pseudoRandomGeneration(permutationArray, key, keyLength, outputLength);
+
+   //print output
+   for (int i = 0; i < outputLength; i++) {
+      printf("byte %d: %02x \n", i+1, stream[i]);
+   }
+
    return 0;
 }
 
