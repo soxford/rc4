@@ -7,9 +7,66 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 #include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+int permutationArrayLength = 256;
+//declarations
+uint8_t* pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int keyLength, int outputSize);
 
 int main(int argc, const char *argv[])
 {
-      
    return 0;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Key Scheduling function
+ * input - key, keylength (typically 5 - 16 bytes) and the permutation array (256 bytes long)
+ * output - void
+ * description - permutes the elements of the permutation array according to the RC4 Key Scheduling Algorithm
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+void keySchedule( uint8_t* permutationArray, uint8_t* key, int keyLength){
+   //initialize the permutation array to be the identity permutation
+   for (int i = 0; i < permutationArrayLength ; i++) {
+      permutationArray[i] = i;
+   }
+   
+   //schedule the permutation array
+   unsigned int j = 0;
+   for (int i = 0; i < permutationArrayLength; i++) {
+      j = (j + (unsigned int) permutationArray[i] + (unsigned int) key[i % keyLength]) % permutationArrayLength;
+      //swap ith and jth elements
+      uint8_t tmp = permutationArray[i];
+      permutationArray[i] = permutationArray[j];
+      permutationArray[j] = tmp;  
+   }
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Pseudo-random generation function 
+ * input - the permutation array (256 bytes long), outputSize (>= 1), key and keylength
+ * output - an array of outputs of size outputSize
+ * description - outputs bytes according to the RC4 Pseudo-random generation Algorithm
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+uint8_t* pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int keyLength, int outputSize){
+   //keySchedule to initialize ahead of Pseudo Random generation
+   keySchedule(permutationArray, key, keyLength);
+
+   //allocate output array
+   uint8_t* output = malloc(outputSize*sizeof(uint8_t));
+   
+   //PRG loop
+   int i = 0, j = 0, k = 0;
+   while(k < outputSize){
+      i = (i + 1) % permutationArrayLength;
+      j = (j + permutationArray[i]) % permutationArrayLength;
+
+      //swap ith and jth elements
+      uint8_t tmp = permutationArray[i];
+      permutationArray[i] = permutationArray[j];
+      permutationArray[j] = tmp;  
+      
+      //assign the output
+      output[k++] = permutationArray[(permutationArray[i] + permutationArray[j]) % permutationArrayLength]; 
+   }
+   return output;
 }
