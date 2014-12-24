@@ -9,27 +9,64 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-int permutationArrayLength = 256;
+#include <time.h>
+#include <libc.h>
+int permutationArrayLength = 256; //permutation array length (no of bytes)
+int keyLength = 10; //key length (no of bytes)
 //declarations
-uint8_t* pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int keyLength, int outputSize);
+void pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int keyLength, int outputSize, FILE* outputFile);
 
 int main(int argc, const char *argv[])
 {
-   //static example of code use
-   //static inputs
-   uint8_t key[] = {'K', 'e', 'y'};
-   int keyLength = 3;
-   uint8_t permutationArray[permutationArrayLength];   
-   int outputLength = 20
-
-   //run RC4 algorithm
-   uint8_t* stream = pseudoRandomGeneration(permutationArray, key, keyLength, outputLength);
-
-   //print output
-   for (int i = 0; i < outputLength; i++) {
-      printf("byte %d: %02x \n", i+1, stream[i]);
+   //create a file to output multiple runs of the rc4 cipher to and run the algorithm multiple times to store information 
+   FILE* outputF = fopen("rc4_output.txt", "a");
+   //null check
+   if (outputF == NULL) {
+      printf("Error: file failed to open\n");
+      return 1;
    }
 
+   //assign space for the key;
+   uint8_t* key = (uint8_t*)  malloc(sizeof(uint8_t)*keyLength);
+
+   //null check
+   if (key == NULL) {
+      printf("Error: malloc failed");
+      return 1;
+   }
+   //set number of runs of the PRG algo
+   int loopcount = 10000;
+
+   srand(time(NULL));
+   //variables for measuring clock usage
+   clock_t begin, end;
+   double time_spent;
+   begin = clock();
+
+   //loop to generate multiple stream outputs
+   for (int i = 0; i < loopcount; i++) {
+
+      //random key generation
+      for (int i = 0; i < keyLength; i++) {
+         key[i] = (uint8_t) (rand() % 256);
+      }
+      uint8_t permutationArray[permutationArrayLength];   
+      //set output length
+      int outputLength = 256;
+
+      //run RC4 algorithm
+      pseudoRandomGeneration(permutationArray, key, keyLength, outputLength, outputF);
+      fprintf(outputF, "\n");
+   }
+
+   end = clock();
+   time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+   //report time_spent
+   printf("Time spent in PRG loop in seconds: %e\n", time_spent);
+   //free the key space
+   free(key); 
+   //close the file and return
+   fclose(outputF);
    return 0;
 }
 
@@ -59,16 +96,19 @@ void keySchedule( uint8_t* permutationArray, uint8_t* key, int keyLength){
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Pseudo-random generation function 
  * input - the permutation array (256 bytes long), outputSize (>= 1), key and keylength
- * output - an array of outputs of size outputSize
+ * output - void (output bytes to a file as a space separate array of output bytes of length outputSize)
  * description - outputs bytes according to the RC4 Pseudo-random generation Algorithm
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-uint8_t* pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int keyLength, int outputSize){
+void pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int keyLength, int outputSize, FILE* outputFile){
+   //if output file is null then return and print error message
+   if(outputFile == NULL){
+      printf("Error: pseudoRandomNumber generation aborted as output file in NULL\n");
+      return;
+   } 
+
    //keySchedule to initialize ahead of Pseudo Random generation
    keySchedule(permutationArray, key, keyLength);
 
-   //allocate output array
-   uint8_t* output = malloc(outputSize*sizeof(uint8_t));
-   
    //PRG loop
    int i = 0, j = 0, k = 0;
    while(k < outputSize){
@@ -81,7 +121,7 @@ uint8_t* pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int key
       permutationArray[j] = tmp;  
       
       //assign the output
-      output[k++] = permutationArray[(permutationArray[i] + permutationArray[j]) % permutationArrayLength]; 
+      fprintf(outputFile, "%02x ", permutationArray[(permutationArray[i] + permutationArray[j]) % permutationArrayLength]); 
+      k++;
    }
-   return output;
 }
