@@ -12,8 +12,8 @@
 #include <time.h>
 #include <libc.h>
 
-int permutationArrayLength = 256; //permutation array length (no of bytes)
-int keyLength = 10; //key length (no of bytes)
+int PERMUTATION_ARRAY_LENGTH = 256; //permutation array length (no of bytes)
+int KEY_LENGTH = 10; //key length (no of bytes)
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Key Scheduling function
@@ -21,16 +21,16 @@ int keyLength = 10; //key length (no of bytes)
  * output - void
  * description - permutes the elements of the permutation array according to the RC4 Key Scheduling Algorithm
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void keySchedule( uint8_t* permutationArray, uint8_t* key, int keyLength){
+void keySchedule( uint8_t* permutationArray, uint8_t* key, int KEY_LENGTH){
    //initialize the permutation array to be the identity permutation
-   for (int i = 0; i < permutationArrayLength ; i++) {
+   for (int i = 0; i < PERMUTATION_ARRAY_LENGTH ; i++) {
       permutationArray[i] = i;
    }
    
    //schedule the permutation array
    unsigned int j = 0;
-   for (int i = 0; i < permutationArrayLength; i++) {
-      j = (j + (unsigned int) permutationArray[i] + (unsigned int) key[i % keyLength]) % permutationArrayLength;
+   for (int i = 0; i < PERMUTATION_ARRAY_LENGTH; i++) {
+      j = (j + (unsigned int) permutationArray[i] + (unsigned int) key[i % KEY_LENGTH]) % PERMUTATION_ARRAY_LENGTH;
       //swap ith and jth elements
       uint8_t tmp = permutationArray[i];
       permutationArray[i] = permutationArray[j];
@@ -44,7 +44,7 @@ void keySchedule( uint8_t* permutationArray, uint8_t* key, int keyLength){
  * output - void (output bytes to a file as a space separate array of output bytes of length outputSize)
  * description - outputs bytes according to the RC4 Pseudo-random generation Algorithm
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int keyLength, int outputSize, FILE* outputFile){
+void pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int KEY_LENGTH, int outputSize, FILE* outputFile){
    //if output file is null then return and print error message
    if(outputFile == NULL){
       printf("Error: pseudoRandomNumber generation aborted as output file in NULL\n");
@@ -52,13 +52,13 @@ void pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int keyLeng
    } 
 
    //keySchedule to initialize ahead of Pseudo Random generation
-   keySchedule(permutationArray, key, keyLength);
+   keySchedule(permutationArray, key, KEY_LENGTH);
 
    //PRG loop
    int i = 0, j = 0, k = 0;
    while(k < outputSize){
-      i = (i + 1) % permutationArrayLength;
-      j = (j + permutationArray[i]) % permutationArrayLength;
+      i = (i + 1) % PERMUTATION_ARRAY_LENGTH;
+      j = (j + permutationArray[i]) % PERMUTATION_ARRAY_LENGTH;
 
       //swap ith and jth elements
       uint8_t tmp = permutationArray[i];
@@ -66,7 +66,7 @@ void pseudoRandomGeneration(uint8_t* permutationArray, uint8_t* key, int keyLeng
       permutationArray[j] = tmp;  
       
       //assign the output
-      fprintf(outputFile, "%02x ", permutationArray[(permutationArray[i] + permutationArray[j]) % permutationArrayLength]); 
+      fprintf(outputFile, "%02x ", permutationArray[(permutationArray[i] + permutationArray[j]) % PERMUTATION_ARRAY_LENGTH]); 
       k++;
    }
 }
