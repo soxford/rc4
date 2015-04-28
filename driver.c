@@ -19,7 +19,7 @@ int main(int argc, const char *argv[])
     }
     
     //assign space for the key;
-    uint8_t* key = (uint8_t*)  malloc(sizeof(uint8_t)*keyLength);
+    uint8_t* key = (uint8_t*)  malloc(sizeof(uint8_t)*KEY_LENGTH);
     
     //null check
     if (key == NULL) {
@@ -39,15 +39,15 @@ int main(int argc, const char *argv[])
     for (int i = 0; i < loopcount; i++) {
         
         //random key generation
-        for (int i = 0; i < keyLength; i++) {
+        for (int i = 0; i < KEY_LENGTH; i++) {
             key[i] = (uint8_t) (rand() % 256);
         }
-        uint8_t permutationArray[permutationArrayLength];
+        uint8_t permutationArray[PERMUTATION_ARRAY_LENGTH];
         //set output length
         int outputLength = 256;
         
         //run RC4 algorithm
-        pseudoRandomGeneration(permutationArray, key, keyLength, outputLength, outputF);
+        pseudoRandomGeneration(permutationArray, key, KEY_LENGTH, outputLength, outputF);
         fprintf(outputF, "\n");
     }
     
