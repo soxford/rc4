@@ -5,6 +5,8 @@
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+#include <stdio.h>
+#include <time.h>
 #include "rc4.h"
 #include "basic_rand.h"
 int outputLength = 257;

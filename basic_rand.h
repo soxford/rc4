@@ -6,6 +6,7 @@
  * Date: April 2015  
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#include <stdlib.h>
 //Initializes the basic random number generator
 void initializeRandomNoGen(){
    srand(time(NULL));
