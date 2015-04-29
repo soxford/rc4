@@ -1,63 +1,94 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Title: driver.c
- * Author: Simon Campbell, soxford1379@gmail.com
- * Description: Driver file for rc4 output generation
+ * Author: Simon Campbell, <simonhmcampbell@gmai.com>
+ * Description: Test for timing of rc4 output generation of single bytes in the early key stream (upto position 257)
  * License: GPL
- * Date: 31 December 2014
+ * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 #include "rc4.h"
+#include "basic_rand.h"
+int outputLength = 257;
 
 int main(int argc, const char *argv[])
 {
-    //create a file to output multiple runs of the rc4 cipher to and run the algorithm multiple times to store information
-    FILE* outputF = fopen("rc4_output.txt", "a");
-    //null check
-    if (outputF == NULL) {
-        printf("Error: file failed to open\n");
-        return 1;
+   const char* fileName = "logfile.txt";
+   if (argc > 1) {
+      fileName = argv[1];
+   }
+   //open log file for writing
+   FILE* logFile = fopen(fileName, "a");
+   if(logFile == NULL){
+      printf("Error: failed to open file named %s for appending", fileName);
+   }
+
+   //allocate space to hold table of results
+   long histograms[outputLength][PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
+   for (int i = 0; i < outputLength; i++) {
+      for (int j = 0; j < PERMUTATION_ARRAY_LENGTH; j++) {
+         histograms[i][j] = 0;
+      }
+   }
+
+   //assign space for the key;
+   uint8_t* key = (uint8_t*)  malloc(sizeof(uint8_t)*KEY_LENGTH);
+
+   //null check
+   if (key == NULL) {
+     printf("Error: malloc failed");
+     return 1;
+   }
+   
+   //allocate space for the RC4 stream
+   RC4Stream* rc4Stream = malloc(sizeof(RC4Stream));
+   if (rc4Stream == NULL) {
+      printf("Error: malloc failed to allocate RC4Stream\n");
+      return 1;
+   }
+
+   //allocate space for the permutation Array
+   rc4Stream->permutationArray = malloc(sizeof(uint8_t)*PERMUTATION_ARRAY_LENGTH);
+    if (rc4Stream->permutationArray == NULL) {
+       printf("Error: malloc failed to allocate permutation Array\n");
+       return 1;
     }
-    
-    //assign space for the key;
-    uint8_t* key = (uint8_t*)  malloc(sizeof(uint8_t)*KEY_LENGTH);
-    
-    //null check
-    if (key == NULL) {
-        printf("Error: malloc failed");
-        return 1;
-    }
-    //set number of runs of the PRG algo
-    int loopcount = 10000;
-    
-    srand(time(NULL));
-    //variables for measuring clock usage
-    clock_t begin, end;
-    double time_spent;
-    begin = clock();
-    
-    //loop to generate multiple stream outputs
-    for (int i = 0; i < loopcount; i++) {
+   
+   //initialize Random Number Generation algorithm 
+   initializeRandomNoGen();
+
+   //variables for measuring clock usage
+   clock_t begin, end;
+   double time_spent;
+
+   //try various loop counts to compare speed
+   for (int loopcount = 1; loopcount <= 1000000; loopcount*=10) {
+      begin = clock();
+
+      //loop to generate multiple stream outputs
+      for (int i = 0; i < loopcount; i++) {
         
         //random key generation
         for (int i = 0; i < KEY_LENGTH; i++) {
-            key[i] = (uint8_t) (rand() % 256);
+            key[i] = getRand();
         }
-        uint8_t permutationArray[PERMUTATION_ARRAY_LENGTH];
-        //set output length
-        int outputLength = 256;
         
         //run RC4 algorithm
-        pseudoRandomGeneration(permutationArray, key, KEY_LENGTH, outputLength, outputF);
-        fprintf(outputF, "\n");
-    }
-    
-    end = clock();
-    time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-    //report time_spent
-    printf("Time spent in PRG loop in seconds: %e\n", time_spent);
-    //free the key space
-    free(key); 
-    //close the file and return
-    fclose(outputF);
-    return 0;
+        for (int i = 0; i < outputLength; i++) {
+           histograms[i][rc4PRGRound(rc4Stream)]++; //increment the relevant histogram count
+        }
+      }
+
+      end = clock();
+      time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+      //report time_spent
+      fprintf(logFile, "Time spent in sampling loop with loopcount %d in seconds: %e\n", loopcount, time_spent);
+   }
+
+   //free the key space
+   free(key); 
+   free(rc4Stream->permutationArray);
+   free(rc4Stream);
+   //close the file and return
+   fclose(logFile);
+   return 0;
 }
+
