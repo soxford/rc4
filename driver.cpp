@@ -1,14 +1,16 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: driver.c
+ * Title: driver.cpp //TODO convert to c++ idioms
  * Author: Simon Campbell, <simonhmcampbell@gmai.com>
  * Description: Test for timing of rc4 output generation of single bytes in the early key stream (upto position 257)
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #include <stdio.h>
+#include <iostream>
 #include <time.h>
-#include "rc4.h"
-#include "basic_rand.h"
+#include "mersenne_twister_rand_rc4.h"
+
 int outputLength = 257;
 
 int main(int argc, const char *argv[])
@@ -41,14 +43,14 @@ int main(int argc, const char *argv[])
    }
    
    //allocate space for the RC4 stream
-   RC4Stream* rc4Stream = malloc(sizeof(RC4Stream));
+   RC4Stream* rc4Stream = (RC4Stream*) malloc(sizeof(RC4Stream));
    if (rc4Stream == NULL) {
       printf("Error: malloc failed to allocate RC4Stream\n");
       return 1;
    }
 
    //allocate space for the permutation Array
-   rc4Stream->permutationArray = malloc(sizeof(uint8_t)*PERMUTATION_ARRAY_LENGTH);
+   rc4Stream->permutationArray = (uint8_t*) malloc(sizeof(uint8_t)*PERMUTATION_ARRAY_LENGTH);
     if (rc4Stream->permutationArray == NULL) {
        printf("Error: malloc failed to allocate permutation Array\n");
        return 1;
@@ -69,10 +71,8 @@ int main(int argc, const char *argv[])
       for (int i = 0; i < loopcount; i++) {
         
         //random key generation
-        for (int i = 0; i < KEY_LENGTH; i++) {
-            key[i] = getRand();
-        }
-        
+        selectRandomKey(key);
+ 
         //run RC4 algorithm
         for (int i = 0; i < outputLength; i++) {
            histograms[i][rc4PRGRound(rc4Stream)]++; //increment the relevant histogram count

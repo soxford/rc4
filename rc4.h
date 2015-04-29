@@ -6,7 +6,7 @@
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include <stdint.h>
+#include <cstdint>
 
 int PERMUTATION_ARRAY_LENGTH = 256; //permutation array length (no of bytes), 256 is used in TLS
 int KEY_LENGTH = 16; //key length (no of bytes), 16 is used in TLS
