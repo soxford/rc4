@@ -6,6 +6,7 @@
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+//TODO edit time checks to system time checks
 #include <stdio.h>
 #include <iostream>
 #include <time.h>
