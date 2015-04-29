@@ -73,7 +73,10 @@ int main(int argc, const char *argv[])
         
         //random key generation
         selectRandomKey(key);
- 
+         
+        //rekey
+        keySchedule(rc4Stream, key);
+         
         //run RC4 algorithm
         for (int i = 0; i < outputLength; i++) {
            histograms[i][rc4PRGRound(rc4Stream)]++; //increment the relevant histogram count
