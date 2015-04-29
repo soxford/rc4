@@ -73,6 +73,9 @@ int main(int argc, const char *argv[])
         
         //random key generation
         selectRandomKey(key);
+
+        //schedule rc4Stream state
+        keySchedule(rc4Stream, key);
  
         //run RC4 algorithm
         for (int i = 0; i < outputLength; i++) {
