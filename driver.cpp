@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <time.h>
-#include "mersenne_twister_rand_rc4.h"
+#include "mersenne_twister_rand_rc4.cpp"
 
 int outputLength = 257;
 
@@ -27,35 +27,29 @@ int main(int argc, const char *argv[])
    }
 
    //allocate space to hold table of results
-   long histograms[outputLength][PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
+   long histograms[outputLength][RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
    for (int i = 0; i < outputLength; i++) {
-      for (int j = 0; j < PERMUTATION_ARRAY_LENGTH; j++) {
+      for (int j = 0; j < RC4Stream::PERMUTATION_ARRAY_LENGTH; j++) {
          histograms[i][j] = 0;
       }
    }
 
    //assign space for the key;
-   uint8_t* key = (uint8_t*)  malloc(sizeof(uint8_t)*KEY_LENGTH);
+   RC4Stream::Key *key = new RC4Stream::Key();
 
    //null check
    if (key == NULL) {
-     printf("Error: malloc failed");
+     printf("Error: creation of key failed");
      return 1;
    }
    
    //allocate space for the RC4 stream
-   RC4Stream* rc4Stream = (RC4Stream*) malloc(sizeof(RC4Stream));
+   RC4Stream *rc4Stream = new RC4Stream();
    if (rc4Stream == NULL) {
-      printf("Error: malloc failed to allocate RC4Stream\n");
+      printf("Error: failed to construct RC4Stream\n");
       return 1;
    }
 
-   //allocate space for the permutation Array
-   rc4Stream->permutationArray = (uint8_t*) malloc(sizeof(uint8_t)*PERMUTATION_ARRAY_LENGTH);
-    if (rc4Stream->permutationArray == NULL) {
-       printf("Error: malloc failed to allocate permutation Array\n");
-       return 1;
-    }
    
    //initialize Random Number Generation algorithm 
    initializeRandomNoGen();
@@ -75,11 +69,11 @@ int main(int argc, const char *argv[])
         selectRandomKey(key);
          
         //rekey
-        keySchedule(rc4Stream, key);
+        rc4Stream->keySchedule(key);
          
-        //run RC4 algorithm
+        //run RC4 stream algorithm and collect output in histogram counters
         for (int i = 0; i < outputLength; i++) {
-           histograms[i][rc4PRGRound(rc4Stream)]++; //increment the relevant histogram count
+           histograms[i][rc4Stream->PRGRound()]++; //increment the relevant histogram count
         }
       }
 
@@ -90,9 +84,9 @@ int main(int argc, const char *argv[])
    }
 
    //free the key space
-   free(key); 
-   free(rc4Stream->permutationArray);
-   free(rc4Stream);
+   delete rc4Stream;
+   delete key;
+
    //close the file and return
    fclose(logFile);
    return 0;
