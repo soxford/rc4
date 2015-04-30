@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <time.h>
-#include "mersenne_twister_rand_rc4.cpp"
+#include "MT19937_RandomSource.cpp"
 
 int outputLength = 257;
 
@@ -52,7 +52,12 @@ int main(int argc, const char *argv[])
 
    
    //initialize Random Number Generation algorithm 
-   initializeRandomNoGen();
+   RC4Stream::Key::RandomSource *randomSource = new MT19937_RandomSource();
+   if (randomSource == NULL) {
+      printf("Error: failed to construct RandomSource\n");
+      return 1;
+   }
+   randomSource->initializeRandomNoGen();
 
    //variables for measuring clock usage
    clock_t begin, end;
@@ -66,7 +71,7 @@ int main(int argc, const char *argv[])
       for (int i = 0; i < loopcount; i++) {
         
         //random key generation
-        selectRandomKey(key);
+        randomSource->selectRandomKey(key);
          
         //rekey
         rc4Stream->keySchedule(key);
@@ -84,6 +89,7 @@ int main(int argc, const char *argv[])
    }
 
    //free the key space
+   delete randomSource;
    delete rc4Stream;
    delete key;
 

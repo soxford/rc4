@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: rc4
+ * Title: RC4Stream.cpp
  * Author: Simon Campbell, <simonhmcampbell@gmail.com>
  * Description: code for the rc4 stream cipher
  * License: GPL
@@ -51,6 +51,23 @@ class RC4Stream
                i = (i > -1 ? i : i + KEY_LENGTH);
                _key[i] = byte;
             }
+
+            /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+             * Title: RandomSource
+             * Author: Simon Campbell, <simonhmcampbell@gmail.com>
+             * Description: Defines an interface for a random number generator for us in providing random RC4Stream::Key values
+             * License: GPL
+             * Date: April 2015  
+             * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+            class RandomSource {
+               public:
+                  //method to initialize the Random number source
+                  virtual void initializeRandomNoGen() {}
+
+                  //method to provide random data to be the value of the provided key
+                  virtual void selectRandomKey(RC4Stream::Key *key) {}
+                  virtual ~RandomSource() {}
+            };
 
       }; 
 
