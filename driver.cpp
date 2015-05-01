@@ -6,13 +6,16 @@
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-//TODO edit time checks to system time checks
+
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
 #include <time.h>
 #include "MT19937_RandomSource.cpp"
 
 int outputLength = 257;
+
+using namespace std;
 
 int main(int argc, const char *argv[])
 {
@@ -20,10 +23,12 @@ int main(int argc, const char *argv[])
    if (argc > 1) {
       fileName = argv[1];
    }
+
    //open log file for writing
-   FILE* logFile = fopen(fileName, "a");
+   ofstream logFile ;
+   logFile.open(fileName);
    if(logFile == NULL){
-      printf("Error: failed to open file named %s for appending", fileName);
+      cout << "Error: failed to open file named " << fileName << endl;
    }
 
    //allocate space to hold table of results
@@ -39,14 +44,14 @@ int main(int argc, const char *argv[])
 
    //null check
    if (key == NULL) {
-     printf("Error: creation of key failed");
+     logFile << "Error: creation of key failed" << endl;
      return 1;
    }
    
    //allocate space for the RC4 stream
    RC4Stream *rc4Stream = new RC4Stream();
    if (rc4Stream == NULL) {
-      printf("Error: failed to construct RC4Stream\n");
+      logFile << "Error: failed to construct RC4Stream" << endl;
       return 1;
    }
 
@@ -54,7 +59,7 @@ int main(int argc, const char *argv[])
    //initialize Random Number Generation algorithm 
    RC4Stream::Key::RandomSource *randomSource = new MT19937_RandomSource();
    if (randomSource == NULL) {
-      printf("Error: failed to construct RandomSource\n");
+      logFile << "Error: failed to construct RandomSource" << endl;
       return 1;
    }
    randomSource->initializeRandomNoGen();
@@ -85,16 +90,16 @@ int main(int argc, const char *argv[])
       end = clock();
       time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
       //report time_spent
-      fprintf(logFile, "Time spent in sampling loop with loopcount %d in seconds: %e\n", loopcount, time_spent);
+      logFile << "Time spent in sampling loop with loopcount " << loopcount << " in seconds: " << scientific << time_spent << endl;
    }
 
-   //free the key space
+   //clean up
    delete randomSource;
    delete rc4Stream;
    delete key;
 
    //close the file and return
-   fclose(logFile);
+   logFile.close();
    return 0;
 }
 
