@@ -1,5 +1,5 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: driver.cpp //TODO convert to c++ idioms
+ * Title: driver.cpp 
  * Author: Simon Campbell, <simonhmcampbell@gmai.com>
  * Description: Test for timing of rc4 output generation of single bytes in the early key stream (upto position 257)
  * License: GPL
