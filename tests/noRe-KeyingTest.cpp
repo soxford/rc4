@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: controlTest.cpp 
+ * Title: noRe-KeyingTest.cpp
  * Author: Simon Campbell, <simonhmcampbell@gmai.com>
- * Description: A control test for comparison to variants for the identification of bottlenecks
+ * Description: A test without re-keying the rc4 cipher for each stream output to compare against the control test and identify bottelnecks
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -13,7 +13,7 @@
 #include "../MT19937_RandomSource.cpp"
 
 //variables used in documenting the test
-const char* TEST_NAME = "Control Test";
+const char* TEST_NAME = "No Re-Keying Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
@@ -82,13 +82,21 @@ int main(int argc, const char *argv[])
       logFile << "Error: failed to construct RandomSource" << endl;
       return 1;
    }
+
    randomSource->initializeRandomNoGen();
+
+   //choose a key and schedule the key but never reschedule the key
+   //random key generation
+   randomSource->selectRandomKey(key);
+   
+   //rekey
+   rc4Stream->keySchedule(key);
 
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
-   
-   //record test data
+
+   //record test data 
    logFile << "Test Data:" << endl;
    logFile << FIELDS << endl;
 
@@ -99,11 +107,11 @@ int main(int argc, const char *argv[])
       //loop to generate multiple stream outputs
       for (int i = 0; i < loopcount; i++) {
         
-        //random key generation
+        //random key generation still included even though the key is not reset to compare precisely the rekeying step to the control test
         randomSource->selectRandomKey(key);
          
-        //rekey
-        rc4Stream->keySchedule(key);
+        //TEST rekey is not done in this test
+        //rc4Stream->keySchedule(key);
          
         //run RC4 stream algorithm and collect output in histogram counters
         for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {

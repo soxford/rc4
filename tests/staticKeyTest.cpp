@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: controlTest.cpp 
+ * Title: staticKeyTest.cpp
  * Author: Simon Campbell, <simonhmcampbell@gmai.com>
- * Description: A control test for comparison to variants for the identification of bottlenecks
+ * Description: A timing test for RC4 Stream generation with a single static key instead of random key generation on each stream
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -13,7 +13,7 @@
 #include "../MT19937_RandomSource.cpp"
 
 //variables used in documenting the test
-const char* TEST_NAME = "Control Test";
+const char* TEST_NAME = "Static Key Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
@@ -51,6 +51,7 @@ int main(int argc, const char *argv[])
                               <<  now->tm_min
                               << endl;
    logFile << "Length of each RC4 stream in bytes: " << STREAM_OUTPUT_LENGTH << endl;
+   logFile << "Test Data:" << endl;
    //allocate space to hold table of results
    long histograms[STREAM_OUTPUT_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
    for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
@@ -82,14 +83,16 @@ int main(int argc, const char *argv[])
       logFile << "Error: failed to construct RandomSource" << endl;
       return 1;
    }
+
+   //Initialize RNG
    randomSource->initializeRandomNoGen();
+   // TEST Initialize key for use in static key test
+   randomSource->selectRandomKey(key);
 
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
    
-   //record test data
-   logFile << "Test Data:" << endl;
    logFile << FIELDS << endl;
 
    //try various loop counts to compare speed
@@ -99,8 +102,8 @@ int main(int argc, const char *argv[])
       //loop to generate multiple stream outputs
       for (int i = 0; i < loopcount; i++) {
         
-        //random key generation
-        randomSource->selectRandomKey(key);
+        //TEST random key generation no longer in this loop but instead done once ahead of the loop
+        //randomSource->selectRandomKey(key);
          
         //rekey
         rc4Stream->keySchedule(key);
