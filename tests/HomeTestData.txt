@@ -1,0 +1,15 @@
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-5 17:18
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spend Initializing and Generating RC4 Streams (s)
+1 & 1.7e-05
+10 & 0.000121
+100 & 0.00118
+1000 & 0.010568
+10000 & 0.090403
+100000 & 0.869651
+1000000 & 8.74436
