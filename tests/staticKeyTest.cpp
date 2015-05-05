@@ -1,41 +1,60 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: driver.cpp 
- * Author: Simon Campbell, <simonhmcampbell@gmail.com>
- * Description: Test for timing of rc4 output generation of single bytes in the early key stream (upto position 257)
+ * Title: staticKeyTest.cpp
+ * Author: Simon Campbell, <simonhmcampbell@gmai.com>
+ * Description: A timing test for RC4 Stream generation with a single static key instead of random key generation on each stream
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-#include <stdio.h>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <time.h>
-#include "MT19937_RandomSource.cpp"
+#include <ctime>
+#include "../MT19937_RandomSource.cpp"
 
-int outputLength = 257;
-int MAX_LOOPCOUNT = 10000000;
+//variables used in documenting the test
+const char* TEST_NAME = "Static Key Test";
+const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
+int STREAM_OUTPUT_LENGTH = 257;
+
+int MAX_LOOPCOUNT = 1000000;
 
 using namespace std;
 
 int main(int argc, const char *argv[])
 {
-   char* fileName = "logfile.txt";
+   const char* fileName;
    if (argc > 1) {
       fileName = argv[1];
+   } else {
+      cout << "Usage: Enter file name for storing test data" << endl;
+      return 1;
    }
 
-   //open log file for writing
+   //open log file for appending data
    ofstream logFile ;
-   logFile.open(fileName);
+   logFile.open(fileName, ofstream::app);
    if(!logFile.is_open()){
       cout << "Error: failed to open file named " << fileName << endl;
       return 1;
    }
-
+   
+   //Output details of the attempted test to the logfile
+   logFile << endl << "===============================================================" << endl << endl;
+   logFile << "Test Name: " << TEST_NAME << endl;
+   time_t t = time(0);   // get time now
+   struct tm * now = localtime( & t );
+   logFile << "Date/Time: "   << (now->tm_year + 1900) << '-' 
+                              << (now->tm_mon + 1) << '-'
+                              <<  now->tm_mday << " "
+                              <<  now->tm_hour << ":"
+                              <<  now->tm_min
+                              << endl;
+   logFile << "Length of each RC4 stream in bytes: " << STREAM_OUTPUT_LENGTH << endl;
+   logFile << "Test Data:" << endl;
    //allocate space to hold table of results
-   long histograms[outputLength][RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
-   for (int i = 0; i < outputLength; i++) {
+   long histograms[STREAM_OUTPUT_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
+   for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
       for (int j = 0; j < RC4Stream::PERMUTATION_ARRAY_LENGTH; j++) {
          histograms[i][j] = 0;
       }
@@ -57,18 +76,24 @@ int main(int argc, const char *argv[])
       return 1;
    }
 
-   
+
    //initialize Random Number Generation algorithm 
    RC4Stream::Key::RandomSource *randomSource = new MT19937_RandomSource();
    if (randomSource == NULL) {
       logFile << "Error: failed to construct RandomSource" << endl;
       return 1;
    }
+
+   //Initialize RNG
    randomSource->initializeRandomNoGen();
+   // TEST Initialize key for use in static key test
+   randomSource->selectRandomKey(key);
 
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
+   
+   logFile << FIELDS << endl;
 
    //try various loop counts to compare speed
    for (int loopcount = 1; loopcount <= MAX_LOOPCOUNT; loopcount*=10) {
@@ -77,14 +102,14 @@ int main(int argc, const char *argv[])
       //loop to generate multiple stream outputs
       for (int i = 0; i < loopcount; i++) {
         
-        //random key generation
-        randomSource->selectRandomKey(key);
+        //TEST random key generation no longer in this loop but instead done once ahead of the loop
+        //randomSource->selectRandomKey(key);
          
         //rekey
         rc4Stream->keySchedule(key);
          
         //run RC4 stream algorithm and collect output in histogram counters
-        for (int i = 0; i < outputLength; i++) {
+        for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
            histograms[i][rc4Stream->PRGRound()]++; //increment the relevant histogram count
         }
       }
@@ -92,8 +117,10 @@ int main(int argc, const char *argv[])
       end = clock();
       time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
       //report time_spent
-      logFile << "Time spent in sampling loop with loopcount " << loopcount << " in seconds: " << scientific << time_spent << endl;
+      logFile << loopcount << " & " << time_spent << endl;
    }
+
+
 
    //clean up
    delete randomSource;
