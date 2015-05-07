@@ -1,0 +1,9 @@
+./tests/HomeTestData.txt:10 & 0.000121
+./tests/HomeTestData.txt:10 & 0.000141
+./tests/HomeTestData.txt:10 & 7.5e-05
+./tests/HomeTestData.txt:10 & 7.5e-05
+./tests/HomeTestData.txt:10 & 0.000132
+./tests/HomeTestData.txt:10 & 0.000133
+./tests/HomeTestData.txt:10 & 0.000125
+./tests/HomeTestData.txt:10 & 0.000146
+./tests/HomeTestData.txt:10 & 0.00012
