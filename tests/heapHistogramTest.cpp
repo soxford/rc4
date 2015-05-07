@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: noHistogramLookupTest.cpp
- * Author: Simon Campbell, <simonhmcampbell@gmai.com>
- * Description: A timing test without histogram lookups to identify bottlenecks
+ * Title: heapHistogramTest.cpp
+ * Author: Simon Campbell, <simonhmcampbell@gmail.com>
+ * Description: A timing test using a heap allocated histogram to compare to the control test
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -13,7 +13,7 @@
 #include "../MT19937_RandomSource.cpp"
 
 //variables used in documenting the test
-const char* TEST_NAME = "No Histogram Lookup Test";
+const char* TEST_NAME = "Heap Allocated Histogram Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
@@ -52,7 +52,10 @@ int main(int argc, const char *argv[])
                               << endl;
    logFile << "Length of each RC4 stream in bytes: " << STREAM_OUTPUT_LENGTH << endl;
    //allocate space to hold table of results
-   long histograms[STREAM_OUTPUT_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
+   long** histograms = new long*[STREAM_OUTPUT_LENGTH];
+   for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
+      histograms[i] = new long[RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
+   } 
    for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
       for (int j = 0; j < RC4Stream::PERMUTATION_ARRAY_LENGTH; j++) {
          histograms[i][j] = 0;
@@ -107,9 +110,7 @@ int main(int argc, const char *argv[])
          
         //run RC4 stream algorithm and collect output in histogram counters
         for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-           //TEST we remove any histogram lookups but still compute the PRGRound to isolate the lookup time
-           //histograms[i][rc4Stream->PRGRound()]++; //increment the relevant histogram count
-           rc4Stream->PRGRound();
+           histograms[i][rc4Stream->PRGRound()]++; //increment the relevant histogram count
         }
       }
 
@@ -122,6 +123,10 @@ int main(int argc, const char *argv[])
 
 
    //clean up
+   for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
+      delete histograms[i];
+   }
+   delete histograms;
    delete randomSource;
    delete rc4Stream;
    delete key;

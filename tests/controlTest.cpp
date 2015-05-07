@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * Title: controlTest.cpp 
- * Author: Simon Campbell, <simonhmcampbell@gmai.com>
+ * Author: Simon Campbell, <simonhmcampbell@gmail.com>
  * Description: A control test for comparison to variants for the identification of bottlenecks
  * License: GPL
  * Date: April 2015
@@ -63,14 +63,14 @@ int main(int argc, const char *argv[])
    RC4Stream::Key *key = new RC4Stream::Key();
 
    //null check
-   if (key == NULL) {
+   if (key == nullptr) {
      logFile << "Error: creation of key failed" << endl;
      return 1;
    }
    
    //allocate space for the RC4 stream
    RC4Stream *rc4Stream = new RC4Stream();
-   if (rc4Stream == NULL) {
+   if (rc4Stream == nullptr) {
       logFile << "Error: failed to construct RC4Stream" << endl;
       return 1;
    }
@@ -78,7 +78,7 @@ int main(int argc, const char *argv[])
 
    //initialize Random Number Generation algorithm 
    RC4Stream::Key::RandomSource *randomSource = new MT19937_RandomSource();
-   if (randomSource == NULL) {
+   if (randomSource == nullptr) {
       logFile << "Error: failed to construct RandomSource" << endl;
       return 1;
    }

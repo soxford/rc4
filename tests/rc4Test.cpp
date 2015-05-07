@@ -21,7 +21,7 @@ int main(int argc, const char *argv[])
    //assign space for the key;
    RC4Stream::Key *key = new RC4Stream::Key();
    //null check
-   if (key == NULL) {
+   if (key == nullptr) {
      cout << "Error: creation of key failed" << endl;
      return 1;
    }
@@ -38,7 +38,7 @@ int main(int argc, const char *argv[])
                            { 0x08, 0x46, 0x71, 0xc8, 0x83, 0x5e, 0xe8, 0xf9, 0x09, 0xa8, 0xb4, 0x8f, 0x7d, 0xd2, 0x15, 0xb3 } };
    //allocate space for the RC4 stream
    RC4Stream *rc4Stream = new RC4Stream();
-   if (rc4Stream == NULL) {
+   if (rc4Stream == nullptr) {
       cout << "Error: failed to construct RC4Stream" << endl;
       return 1;
    }

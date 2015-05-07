@@ -1,15 +1,8 @@
-echo 'HomeTestData.txt'
-echo '\n1'
-egrep '^(1 & )' ./tests/HomeTestData.txt | sed 's/1 & / /' | tr '\n' '&'
-echo '\n10'
-egrep '^(10 & )' ./tests/HomeTestData.txt | sed 's/10 & / /' | tr '\n' '&'
-echo '\n100'
-egrep '^(100 & )' ./tests/HomeTestData.txt | sed 's/100 & / /' | tr '\n' '&'
-echo '\n1000'
-egrep '^(1000 & )' ./tests/HomeTestData.txt | sed 's/1000 & / /' | tr '\n' '&'
-echo '\n10000'
-egrep '^(10000 & )' ./tests/HomeTestData.txt | sed 's/10000 & / /' | tr '\n' '&'
-echo '\n100000'
-egrep '^(100000 & )' ./tests/HomeTestData.txt | sed 's/100000 & / /' | tr '\n' '&'
-echo '\n100000'
-egrep '^(1000000 & )' ./tests/HomeTestData.txt | sed 's/1000000 & / /' | tr '\n' '&'
+#Outputs the pilot test data in the passed data file as an ampisand separated string for each value of Counter
+echo $1
+COUNTER=1
+while [  $COUNTER -lt 10000000 ]; do
+   echo "\n$COUNTER"
+   egrep "^($COUNTER & )" $1 | sed "s/$COUNTER & / /" | tr '\n' '&'
+   let COUNTER=COUNTER*10 
+done
