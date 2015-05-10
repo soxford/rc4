@@ -1,0 +1,270 @@
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-9 20:14
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.7e-05
+10 & 0.00013
+100 & 0.001184
+1000 & 0.010238
+10000 & 0.088803
+100000 & 0.865778
+1000000 & 8.78295
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-9 20:14
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.7e-05
+10 & 0.00012
+100 & 0.001201
+1000 & 0.01053
+10000 & 0.093891
+100000 & 0.870349
+1000000 & 8.61057
+
+===============================================================
+
+Test Name: No Key Scheduling RC4 Stream Test
+Date/Time: 2015-5-9 20:59
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.1e-05
+10 & 7.5e-05
+100 & 0.00074
+1000 & 0.006901
+10000 & 0.055019
+100000 & 0.532764
+1000000 & 5.3562
+
+===============================================================
+
+Test Name: No Key Scheduling RC4 Stream Test
+Date/Time: 2015-5-9 20:59
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.2e-05
+10 & 7.6e-05
+100 & 0.000747
+1000 & 0.007062
+10000 & 0.054881
+100000 & 0.53123
+1000000 & 5.40443
+
+===============================================================
+
+Test Name: No PRG Round RC4 Stream Test
+Date/Time: 2015-5-9 23:58
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.5e-05
+10 & 9.9e-05
+100 & 0.000948
+1000 & 0.008172
+10000 & 0.060404
+100000 & 0.574179
+1000000 & 5.70719
+
+===============================================================
+
+Test Name: No PRG Round RC4 Stream Test
+Date/Time: 2015-5-9 23:58
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.5e-05
+10 & 9.7e-05
+100 & 0.000845
+1000 & 0.007461
+10000 & 0.061775
+100000 & 0.574838
+1000000 & 5.74268
+
+===============================================================
+
+Test Name: Permutation Initialisation byt no further Scheduling RC4 Stream Test
+Date/Time: 2015-5-10 0:11
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.3e-05
+10 & 9.3e-05
+100 & 0.000859
+1000 & 0.007879
+10000 & 0.064083
+100000 & 0.619586
+1000000 & 6.16846
+
+===============================================================
+
+Test Name: Permutation Initialisation byt no further Scheduling RC4 Stream Test
+Date/Time: 2015-5-10 0:12
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.3e-05
+10 & 9.1e-05
+100 & 0.0008
+1000 & 0.007459
+10000 & 0.061189
+100000 & 0.58696
+1000000 & 5.87147
+
+===============================================================
+
+Test Name: Permutation Scheduling without initialisation RC4 Stream Test
+Date/Time: 2015-5-10 0:21
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.9e-05
+10 & 0.00015
+100 & 0.001362
+1000 & 0.010531
+10000 & 0.087627
+100000 & 0.837442
+1000000 & 8.34627
+
+===============================================================
+
+Test Name: Permutation Scheduling without initialisation RC4 Stream Test
+Date/Time: 2015-5-10 0:21
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 2e-05
+10 & 0.00016
+100 & 0.001398
+1000 & 0.010936
+10000 & 0.0855
+100000 & 0.837482
+1000000 & 8.52614
+
+===============================================================
+
+Test Name: Permutation Scheduling without updating index j RC4 Stream Test
+Date/Time: 2015-5-10 12:5
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.7e-05
+10 & 0.000136
+100 & 0.001088
+1000 & 0.008932
+10000 & 0.065751
+100000 & 0.63847
+1000000 & 6.33716
+
+===============================================================
+
+Test Name: Permutation Scheduling without updating index j RC4 Stream Test
+Date/Time: 2015-5-10 12:5
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.4e-05
+10 & 0.000101
+100 & 0.000863
+1000 & 0.007969
+10000 & 0.065793
+100000 & 0.638205
+1000000 & 6.36335
+
+===============================================================
+
+Test Name: Permutation Scheduling with no key lookup, RC4 Stream Test
+Date/Time: 2015-5-10 12:23
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.7e-05
+10 & 0.00012
+100 & 0.001151
+1000 & 0.008917
+10000 & 0.071075
+100000 & 0.683415
+1000000 & 6.86409
+
+===============================================================
+
+Test Name: Permutation Scheduling with no key lookup, RC4 Stream Test
+Date/Time: 2015-5-10 12:24
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.4e-05
+10 & 9.5e-05
+100 & 0.000904
+1000 & 0.008509
+10000 & 0.06901
+100000 & 0.683233
+1000000 & 6.7759
+
+===============================================================
+
+Test Name: Key Lookup assuming signed index lookup, Timing test in RC4 Stream
+Date/Time: 2015-5-10 12:42
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 2e-05
+10 & 0.000176
+100 & 0.001459
+1000 & 0.010813
+10000 & 0.088947
+100000 & 0.869867
+1000000 & 8.75798
+
+===============================================================
+
+Test Name: Key Lookup assuming signed index lookup, Timing test in RC4 Stream
+Date/Time: 2015-5-10 12:43
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.6e-05
+10 & 0.000124
+100 & 0.001177
+1000 & 0.010311
+10000 & 0.092446
+100000 & 0.868687
+1000000 & 8.60977
+
+===============================================================
+
+Test Name: Key Length 1, Test
+Date/Time: 2015-5-10 15:43
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.7e-05
+10 & 0.00014
+100 & 0.001212
+1000 & 0.009849
+10000 & 0.093607
+100000 & 0.909337
+1000000 & 8.87049
+
+===============================================================
+
+Test Name: Key Length = 1, Test
+Date/Time: 2015-5-10 15:43
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.7e-05
+10 & 0.000142
+100 & 0.001212
+1000 & 0.010568
+10000 & 0.093269
+100000 & 0.887679
+1000000 & 8.84814

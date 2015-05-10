@@ -5,7 +5,10 @@
  * License: GPL
  * Date: April 2015  
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+#ifndef RC4_STREAM_GUARD
 #include "RC4Stream.cpp"
+#endif
+
 #include <stdlib.h>
 
 class Basic_RandomSource : public RC4Stream::Key::RandomSource {

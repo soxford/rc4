@@ -11,7 +11,7 @@
 #include <iostream>
 #include <fstream>
 #include <time.h>
-#include "../MT19937_RandomSource.cpp"
+#include "../../MT19937_RandomSource.cpp"
 
 using namespace std;
 

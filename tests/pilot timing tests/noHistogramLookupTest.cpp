@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: rc4BatchGenerationTest.cpp
- * Author: Simon Campbell, <simonhmcampbell@gmail.com>
- * Description: A timing test for batch generation of the RC4 Stream data for comparison to the control data
+ * Title: noHistogramLookupTest.cpp
+ * Author: Simon Campbell, <simonhmcampbell@gmai.com>
+ * Description: A timing test without histogram lookups to identify bottlenecks
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -10,10 +10,10 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-#include "../MT19937_RandomSource.cpp"
+#include "../../MT19937_RandomSource.cpp"
 
 //variables used in documenting the test
-const char* TEST_NAME = "RC4 Batch Generation Test";
+const char* TEST_NAME = "No Histogram Lookup Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
@@ -107,7 +107,9 @@ int main(int argc, const char *argv[])
          
         //run RC4 stream algorithm and collect output in histogram counters
         for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-           histograms[i][rc4Stream->PRGRound()]++; //increment the relevant histogram count
+           //TEST we remove any histogram lookups but still compute the PRGRound to isolate the lookup time
+           //histograms[i][rc4Stream->PRGRound()]++; //increment the relevant histogram count
+           rc4Stream->PRGRound();
         }
       }
 

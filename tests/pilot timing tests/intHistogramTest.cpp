@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: heapHistogramTest.cpp
+ * Title: intHistogramTest.cpp
  * Author: Simon Campbell, <simonhmcampbell@gmail.com>
- * Description: A timing test using a heap allocated histogram to compare to the control test
+ * Description: A timing test using an int histogram instead of a long histogram
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -10,10 +10,10 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-#include "../MT19937_RandomSource.cpp"
+#include "../../MT19937_RandomSource.cpp"
 
 //variables used in documenting the test
-const char* TEST_NAME = "Heap Allocated Histogram Test";
+const char* TEST_NAME = "Control Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
@@ -52,10 +52,8 @@ int main(int argc, const char *argv[])
                               << endl;
    logFile << "Length of each RC4 stream in bytes: " << STREAM_OUTPUT_LENGTH << endl;
    //allocate space to hold table of results
-   long** histograms = new long*[STREAM_OUTPUT_LENGTH];
-   for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-      histograms[i] = new long[RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
-   } 
+   //TEST int instead of long
+   int histograms[STREAM_OUTPUT_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
    for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
       for (int j = 0; j < RC4Stream::PERMUTATION_ARRAY_LENGTH; j++) {
          histograms[i][j] = 0;
@@ -123,10 +121,6 @@ int main(int argc, const char *argv[])
 
 
    //clean up
-   for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-      delete histograms[i];
-   }
-   delete histograms;
    delete randomSource;
    delete rc4Stream;
    delete key;

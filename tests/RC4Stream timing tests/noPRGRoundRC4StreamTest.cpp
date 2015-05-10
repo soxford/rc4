@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: cnoRC4GenerationTest.cpp
- * Author: Simon Campbell, <simonhmcampbell@gmai.com>
- * Description: A test with no RC4 generation to compare the timing with the control test and identify bottlenecks
+ * Title: noPRGRoundRC4StreamTest.cpp
+ * Author: Simon Campbell, <simonhmcampbell@gmail.com>
+ * Description: A Timing test for comparing performance without PRG behaviour
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -10,10 +10,40 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-#include "../MT19937_RandomSource.cpp"
+#include "../../MT19937_RandomSource.cpp"
+
+#ifndef RC4_STREAM_GUARD
+#include "../../RC4Stream.cpp"
+#endif
+
+//an implementation of RC4Stream that does essentially none of the PRG round steps
+class NoPRGRoundRC4Stream : public RC4Stream {
+   private:
+      uint8_t _roundValue;
+
+   public:
+      NoPRGRoundRC4Stream() : RC4Stream(), _roundValue(0) {}
+      
+      virtual uint8_t PRGRound() {
+            /*TEST we remove the behaviour and replace with a constant 
+            _i = (_i + 1) % PERMUTATION_ARRAY_LENGTH;
+            _j = (_j + _permutationArray[_i]) % PERMUTATION_ARRAY_LENGTH;
+
+            //swap ith and jth elements
+            uint8_t tmp = _permutationArray[_i];
+            _permutationArray[_i] = _permutationArray[_j];
+            _permutationArray[_j] = tmp;  
+            
+            //return the output
+            return _permutationArray[(_permutationArray[_i] + _permutationArray[_j]) % PERMUTATION_ARRAY_LENGTH];  
+            */
+            _roundValue = (_roundValue + 1) % RC4Stream::PERMUTATION_ARRAY_LENGTH;
+            return _roundValue;
+      }
+};
 
 //variables used in documenting the test
-const char* TEST_NAME = "No RC4 Stream Generation Test";
+const char* TEST_NAME = "No PRG Round RC4 Stream Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
@@ -69,7 +99,7 @@ int main(int argc, const char *argv[])
    }
    
    //allocate space for the RC4 stream
-   RC4Stream *rc4Stream = new RC4Stream();
+   RC4Stream *rc4Stream = new NoPRGRoundRC4Stream();
    if (rc4Stream == nullptr) {
       logFile << "Error: failed to construct RC4Stream" << endl;
       return 1;
@@ -107,9 +137,7 @@ int main(int argc, const char *argv[])
          
         //run RC4 stream algorithm and collect output in histogram counters
         for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-           //TEST we do not use PRGRound() method, instead just a static lookup based on the row number to compare the timing
-           //histograms[i][rc4Stream->PRGRound()]++; //increment the relevant histogram count
-           histograms[i][i % RC4Stream::PERMUTATION_ARRAY_LENGTH]++;
+           histograms[i][rc4Stream->PRGRound()]++; //increment the relevant histogram count
         }
       }
 

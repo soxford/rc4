@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: staticKeyTest.cpp
- * Author: Simon Campbell, <simonhmcampbell@gmai.com>
- * Description: A timing test for RC4 Stream generation with a single static key instead of random key generation on each stream
+ * Title: jIndexUpdateWithoutKeyLookupRC4StreamTest.cpp
+ * Author: Simon Campbell, <simonhmcampbell@gmail.com>
+ * Description: A timing test with Key Schedule implementation that updates the j index but does not get anything from the key
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -10,10 +10,41 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-#include "../MT19937_RandomSource.cpp"
+#include "../../MT19937_RandomSource.cpp"
+
+#ifndef RC4_STREAM_GUARD
+#include "../../RC4Stream.cpp"
+#endif
+// an implementation of RC4 Stream that has no key rescheduling behaviour
+class JIndexUpdateWithoutKeyLookupRC4Stream : public RC4Stream {
+   public:
+      JIndexUpdateWithoutKeyLookupRC4Stream() : RC4Stream(){}
+
+      ~JIndexUpdateWithoutKeyLookupRC4Stream() {}
+
+      virtual void keySchedule(RC4Stream::Key* key) {
+         //initialize the permutation array to be the identity permutation
+         for (int i = 0; i < RC4Stream::PERMUTATION_ARRAY_LENGTH ; i++) {
+            RC4Stream::_permutationArray[i] = i;
+         }
+         //schedule the permutation array
+         unsigned int j = 0;
+         for (int i = 0; i < RC4Stream::PERMUTATION_ARRAY_LENGTH; i++) {
+            j = (j + (unsigned int) RC4Stream::_permutationArray[i] /*TEST + (unsigned int) key->getModuloLength(i)*/) % RC4Stream::PERMUTATION_ARRAY_LENGTH;
+            //swap ith and jth elements
+            uint8_t tmp = RC4Stream::_permutationArray[i];
+            RC4Stream::_permutationArray[i] = RC4Stream::_permutationArray[j];
+            RC4Stream::_permutationArray[j] = tmp;  
+         }
+         //initialize the state variables 
+         RC4Stream::_i = 0;
+         RC4Stream::_j = 0;
+      }
+
+};
 
 //variables used in documenting the test
-const char* TEST_NAME = "Static Key Test";
+const char* TEST_NAME = "Permutation Scheduling with no key lookup, RC4 Stream Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
@@ -51,7 +82,6 @@ int main(int argc, const char *argv[])
                               <<  now->tm_min
                               << endl;
    logFile << "Length of each RC4 stream in bytes: " << STREAM_OUTPUT_LENGTH << endl;
-   logFile << "Test Data:" << endl;
    //allocate space to hold table of results
    long histograms[STREAM_OUTPUT_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
    for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
@@ -70,7 +100,7 @@ int main(int argc, const char *argv[])
    }
    
    //allocate space for the RC4 stream
-   RC4Stream *rc4Stream = new RC4Stream();
+   RC4Stream *rc4Stream = new JIndexUpdateWithoutKeyLookupRC4Stream();
    if (rc4Stream == nullptr) {
       logFile << "Error: failed to construct RC4Stream" << endl;
       return 1;
@@ -83,16 +113,14 @@ int main(int argc, const char *argv[])
       logFile << "Error: failed to construct RandomSource" << endl;
       return 1;
    }
-
-   //Initialize RNG
    randomSource->initializeRandomNoGen();
-   // TEST Initialize key for use in static key test
-   randomSource->selectRandomKey(key);
 
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
    
+   //record test data
+   logFile << "Test Data:" << endl;
    logFile << FIELDS << endl;
 
    //try various loop counts to compare speed
@@ -102,8 +130,8 @@ int main(int argc, const char *argv[])
       //loop to generate multiple stream outputs
       for (int i = 0; i < loopcount; i++) {
         
-        //TEST random key generation no longer in this loop but instead done once ahead of the loop
-        //randomSource->selectRandomKey(key);
+        //random key generation
+        randomSource->selectRandomKey(key);
          
         //rekey
         rc4Stream->keySchedule(key);

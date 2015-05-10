@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: noRe-KeyingTest.cpp
- * Author: Simon Campbell, <simonhmcampbell@gmai.com>
- * Description: A test without re-keying the rc4 cipher for each stream output to compare against the control test and identify bottelnecks
+ * Title: noJIndexUpdateScheduleRC4StreamTest.cpp
+ * Author: Simon Campbell, <simonhmcampbell@gmail.com>
+ * Description: A timing test with Key Schedule implementation that does not update the J index in scheduling
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -10,10 +10,42 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-#include "../MT19937_RandomSource.cpp"
+#include "../../MT19937_RandomSource.cpp"
+
+#ifndef RC4_STREAM_GUARD
+#include "../../RC4Stream.cpp"
+#endif
+// an implementation of RC4 Stream that has no key rescheduling behaviour
+class NoJIndeUpdateScheduleRC4Stream : public RC4Stream {
+   public:
+      NoJIndeUpdateScheduleRC4Stream() : RC4Stream(){}
+
+      ~NoJIndeUpdateScheduleRC4Stream() {}
+
+      virtual void keySchedule(RC4Stream::Key* key) {
+         //initialize the permutation array to be the identity permutation
+         for (int i = 0; i < RC4Stream::PERMUTATION_ARRAY_LENGTH ; i++) {
+            RC4Stream::_permutationArray[i] = i;
+         }
+         //schedule the permutation array
+         unsigned int j = 0;
+         for (int i = 0; i < RC4Stream::PERMUTATION_ARRAY_LENGTH; i++) {
+            j = j; //TEST assignment but no update for comparison to control test
+            // j = (j + (unsigned int) RC4Stream::_permutationArray[i] + (unsigned int) key->getModuloLength(i)) % RC4Stream::PERMUTATION_ARRAY_LENGTH;
+            //swap ith and jth elements
+            uint8_t tmp = RC4Stream::_permutationArray[i];
+            RC4Stream::_permutationArray[i] = RC4Stream::_permutationArray[j];
+            RC4Stream::_permutationArray[j] = tmp;  
+         }
+         //initialize the state variables 
+         RC4Stream::_i = 0;
+         RC4Stream::_j = 0;
+      }
+
+};
 
 //variables used in documenting the test
-const char* TEST_NAME = "No Re-Keying Test";
+const char* TEST_NAME = "Permutation Scheduling without updating index j RC4 Stream Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
@@ -69,7 +101,7 @@ int main(int argc, const char *argv[])
    }
    
    //allocate space for the RC4 stream
-   RC4Stream *rc4Stream = new RC4Stream();
+   RC4Stream *rc4Stream = new NoJIndeUpdateScheduleRC4Stream();
    if (rc4Stream == nullptr) {
       logFile << "Error: failed to construct RC4Stream" << endl;
       return 1;
@@ -82,21 +114,13 @@ int main(int argc, const char *argv[])
       logFile << "Error: failed to construct RandomSource" << endl;
       return 1;
    }
-
    randomSource->initializeRandomNoGen();
-
-   //choose a key and schedule the key but never reschedule the key
-   //random key generation
-   randomSource->selectRandomKey(key);
-   
-   //rekey
-   rc4Stream->keySchedule(key);
 
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
-
-   //record test data 
+   
+   //record test data
    logFile << "Test Data:" << endl;
    logFile << FIELDS << endl;
 
@@ -107,11 +131,11 @@ int main(int argc, const char *argv[])
       //loop to generate multiple stream outputs
       for (int i = 0; i < loopcount; i++) {
         
-        //random key generation still included even though the key is not reset to compare precisely the rekeying step to the control test
+        //random key generation
         randomSource->selectRandomKey(key);
          
-        //TEST rekey is not done in this test
-        //rc4Stream->keySchedule(key);
+        //rekey
+        rc4Stream->keySchedule(key);
          
         //run RC4 stream algorithm and collect output in histogram counters
         for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
