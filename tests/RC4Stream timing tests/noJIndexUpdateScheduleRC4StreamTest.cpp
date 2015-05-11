@@ -22,7 +22,7 @@ class NoJIndeUpdateScheduleRC4Stream : public RC4Stream {
 
       ~NoJIndeUpdateScheduleRC4Stream() {}
 
-      virtual void keySchedule(RC4Stream::Key* key) {
+      virtual void keySchedule(RC4Stream::Key &key) {
          //initialize the permutation array to be the identity permutation
          for (int i = 0; i < RC4Stream::PERMUTATION_ARRAY_LENGTH ; i++) {
             RC4Stream::_permutationArray[i] = i;
@@ -95,7 +95,7 @@ int main(int argc, const char *argv[])
    RC4Stream::Key key;
    
    //allocate space for the RC4 stream
-   RC4Stream rc4Stream;
+   NoJIndeUpdateScheduleRC4Stream rc4Stream;
 
    //initialize Random Number Generation algorithm 
    RC4Stream::Key::RandomSource randomSource;

@@ -93,7 +93,7 @@ int main(int argc, const char *argv[])
    RC4Stream::Key key;
    
    //allocate space for the RC4 stream
-   RC4Stream rc4Stream;
+   NoPRGRoundRC4Stream rc4Stream;
 
    //initialize Random Number Generation algorithm 
    RC4Stream::Key::RandomSource randomSource;

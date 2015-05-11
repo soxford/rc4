@@ -5,13 +5,14 @@
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-
+/***************************
+THIS CODE WILL NOT COMPILE, CLASS RC4Stream AND ITS INNER CLASSES HAVE BEEN REFACTORED TO REMOVE ALL HEAP ALLOCATION
+***************************/
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <time.h>
-#include "MT19937_RandomSource.cpp"
+#include "../MT19937_RandomSource.cpp"
 
 int outputLength = 257;
 int MAX_LOOPCOUNT = 10000000;

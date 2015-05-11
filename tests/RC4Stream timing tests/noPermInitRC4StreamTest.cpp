@@ -22,7 +22,7 @@ class NoPermInitRC4Stream : public RC4Stream {
 
       ~NoPermInitRC4Stream() {};
 
-      virtual void keySchedule(RC4Stream::Key* key) {
+      virtual void keySchedule(RC4Stream::Key &key) {
          /* TEST comment out content of the function to remove behaviour for timing test
          //initialize the permutation array to be the identity permutation
          for (int i = 0; i < RC4Stream::PERMUTATION_ARRAY_LENGTH ; i++) {
@@ -98,7 +98,7 @@ int main(int argc, const char *argv[])
    RC4Stream::Key key;
    
    //allocate space for the RC4 stream
-   RC4Stream rc4Stream;
+   NoPermInitRC4Stream rc4Stream;
 
    //initialize Random Number Generation algorithm 
    RC4Stream::Key::RandomSource randomSource;

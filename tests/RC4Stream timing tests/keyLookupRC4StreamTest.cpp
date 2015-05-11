@@ -74,7 +74,7 @@ int main(int argc, const char *argv[])
    }
 
    //assign space for the key;
-   RC4Stream::Key key;
+   KeyLookupTest key;
    
    //allocate space for the RC4 stream
    RC4Stream rc4Stream;
