@@ -8,7 +8,6 @@
 #include <cstdint>
 
 #define RC4_STREAM_GUARD 0
-//TODO consider changing to static allocation of arrays and passing by reference instead of pointers. This keeps all on the stack and close together so perhaps helps keep cache hot? Try it and see
 class RC4Stream
 {
    public:
