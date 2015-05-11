@@ -19,12 +19,7 @@ int main(int argc, const char *argv[])
 {
    
    //assign space for the key;
-   RC4Stream::Key *key = new RC4Stream::Key();
-   //null check
-   if (key == nullptr) {
-     cout << "Error: creation of key failed" << endl;
-     return 1;
-   }
+   RC4Stream::Key key;
 
    uint8_t keys[3][RC4Stream::Key::KEY_LENGTH] = 
                         {  { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F},
@@ -37,11 +32,7 @@ int main(int argc, const char *argv[])
                            { 0x0b, 0x9c, 0x1a, 0xec, 0x15, 0x0e, 0x45, 0xa8, 0xa7, 0x43, 0xe7, 0xc1, 0xe7, 0x4a, 0x1f, 0x9b },
                            { 0x08, 0x46, 0x71, 0xc8, 0x83, 0x5e, 0xe8, 0xf9, 0x09, 0xa8, 0xb4, 0x8f, 0x7d, 0xd2, 0x15, 0xb3 } };
    //allocate space for the RC4 stream
-   RC4Stream *rc4Stream = new RC4Stream();
-   if (rc4Stream == nullptr) {
-      cout << "Error: failed to construct RC4Stream" << endl;
-      return 1;
-   }
+   RC4Stream rc4Stream;
 
    
    //variables for measuring clock usage
@@ -52,14 +43,14 @@ int main(int argc, const char *argv[])
    for (int i = 0; i < 3; i++) {
       //assign the key value
       for(int j = 0; j < RC4Stream::Key::KEY_LENGTH; j++) {
-         key->setModuloLength(j, keys[i][j]);
+         key.setModuloLength(j, keys[i][j]);
       }
      //schedule key
-     rc4Stream->keySchedule(key);
+     rc4Stream.keySchedule(key);
       
      //run RC4 stream algorithm and collect output in histogram counters
      for (int j = 0; j < 16; j++) {
-        if(targets[i][j] != rc4Stream->PRGRound()){
+        if(targets[i][j] != rc4Stream.PRGRound()){
             cout << "missmatch from target " << i << " in byte no. " << j << endl;
             return 1;
         }
@@ -69,9 +60,6 @@ int main(int argc, const char *argv[])
    time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
    cout << "Time spent sampling in seconds: " << scientific << time_spent << endl;
    cout << "Success: target stream match" << endl;
-   //clean up
-   delete rc4Stream;
-   delete key;
 
    //close the file and return
    return 0;

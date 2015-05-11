@@ -60,32 +60,18 @@ int main(int argc, const char *argv[])
    }
 
    //assign space for the key;
-   RC4Stream::Key *key = new RC4Stream::Key();
-
-   //null check
-   if (key == nullptr) {
-     logFile << "Error: creation of key failed" << endl;
-     return 1;
-   }
+   RC4Stream::Key key;
    
    //allocate space for the RC4 stream
-   RC4Stream *rc4Stream = new RC4Stream();
-   if (rc4Stream == nullptr) {
-      logFile << "Error: failed to construct RC4Stream" << endl;
-      return 1;
-   }
-
+   RC4Stream rc4Stream;
 
    //initialize Random Number Generation algorithm 
-   RC4Stream::Key::RandomSource *randomSource = new MT19937_RandomSource();
-   if (randomSource == nullptr) {
-      logFile << "Error: failed to construct RandomSource" << endl;
-      return 1;
-   }
-   randomSource->initializeRandomNoGen();
+   RC4Stream::Key::RandomSource randomSource;
+
+   randomSource.initializeRandomNoGen();
    
    //TEST array for batch generation of RC4 data
-   uint8_t* rc4Output = new uint8_t[STREAM_OUTPUT_LENGTH];
+   uint8_t rc4Output[STREAM_OUTPUT_LENGTH];
 
    //variables for measuring clock usage
    clock_t begin, end;
@@ -103,13 +89,13 @@ int main(int argc, const char *argv[])
       for (int i = 0; i < loopcount; i++) {
         
         //random key generation
-        randomSource->selectRandomKey(key);
+        randomSource.selectRandomKey(key);
          
         //rekey
-        rc4Stream->keySchedule(key);
+        rc4Stream.keySchedule(key);
         // TEST run RC4 stream algorithm and collect output in batch array
         for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-           rc4Output[i] = rc4Stream->PRGRound(); //record the result
+           rc4Output[i] = rc4Stream.PRGRound(); //record the result
         }
          
         //TEST store the batch data in the histogram counts
@@ -123,13 +109,6 @@ int main(int argc, const char *argv[])
       //report time_spent
       logFile << loopcount << " & " << time_spent << endl;
    }
-
-
-
-   //clean up
-   delete randomSource;
-   delete rc4Stream;
-   delete key;
 
    //close the file and return
    logFile.close();

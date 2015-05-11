@@ -60,37 +60,22 @@ int main(int argc, const char *argv[])
    }
 
    //assign space for the key;
-   RC4Stream::Key *key = new RC4Stream::Key();
+   RC4Stream::Key key;
 
-   //null check
-   if (key == nullptr) {
-     logFile << "Error: creation of key failed" << endl;
-     return 1;
-   }
-   
    //allocate space for the RC4 stream
-   RC4Stream *rc4Stream = new RC4Stream();
-   if (rc4Stream == nullptr) {
-      logFile << "Error: failed to construct RC4Stream" << endl;
-      return 1;
-   }
-
+   RC4Stream rc4Stream;
 
    //initialize Random Number Generation algorithm 
-   RC4Stream::Key::RandomSource *randomSource = new MT19937_RandomSource();
-   if (randomSource == nullptr) {
-      logFile << "Error: failed to construct RandomSource" << endl;
-      return 1;
-   }
+   RC4Stream::Key::RandomSource randomSource;
 
-   randomSource->initializeRandomNoGen();
+   randomSource.initializeRandomNoGen();
 
    //choose a key and schedule the key but never reschedule the key
    //random key generation
-   randomSource->selectRandomKey(key);
+   randomSource.selectRandomKey(key);
    
    //rekey
-   rc4Stream->keySchedule(key);
+   rc4Stream.keySchedule(key);
 
    //variables for measuring clock usage
    clock_t begin, end;
@@ -108,14 +93,14 @@ int main(int argc, const char *argv[])
       for (int i = 0; i < loopcount; i++) {
         
         //random key generation still included even though the key is not reset to compare precisely the rekeying step to the control test
-        randomSource->selectRandomKey(key);
+        randomSource.selectRandomKey(key);
          
         //TEST rekey is not done in this test
-        //rc4Stream->keySchedule(key);
+        //rc4Stream.keySchedule(key);
          
         //run RC4 stream algorithm and collect output in histogram counters
         for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-           histograms[i][rc4Stream->PRGRound()]++; //increment the relevant histogram count
+           histograms[i][rc4Stream.PRGRound()]++; //increment the relevant histogram count
         }
       }
 
@@ -124,13 +109,6 @@ int main(int argc, const char *argv[])
       //report time_spent
       logFile << loopcount << " & " << time_spent << endl;
    }
-
-
-
-   //clean up
-   delete randomSource;
-   delete rc4Stream;
-   delete key;
 
    //close the file and return
    logFile.close();

@@ -26,7 +26,7 @@ class Basic_RandomSource : public RC4Stream::Key::RandomSource {
 
 
       //generate the random key - assumes the key provided is of length KEY_LENGTH bytes
-      void selectRandomKey(uint8_t* key){
+      void selectRandomKey(uint8_t &key){
               for(int i = 0; i < RC4Stream::Key::KEY_LENGTH; i++){
                       key[i] = getRand();
               }

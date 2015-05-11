@@ -11,34 +11,35 @@
 //TODO consider changing to static allocation of arrays and passing by reference instead of pointers. This keeps all on the stack and close together so perhaps helps keep cache hot? Try it and see
 class RC4Stream
 {
+   public:
+      static const int PERMUTATION_ARRAY_LENGTH = 256; //permutation array length (no of bytes), 256 is used in TLS
+
    protected:
-      uint8_t* _permutationArray; //the permutation array which must have length PERMUTATION_ARRAY_LENGTH and contain one of each byte value < this length
+      uint8_t _permutationArray[PERMUTATION_ARRAY_LENGTH]; //the permutation array which must have length PERMUTATION_ARRAY_LENGTH and contain one of each byte value < this length
       int _i; // the first internal state which increments on each output, 0 <= i < PERMUTATION_ARRAY_LENGTH
       int _j; // the second internal state which defined by RC4
 
    public:
-      static const int PERMUTATION_ARRAY_LENGTH = 256; //permutation array length (no of bytes), 256 is used in TLS
 
       //constructor
-      RC4Stream() : _permutationArray(new uint8_t[PERMUTATION_ARRAY_LENGTH]), _i(0), _j(0) {
+      RC4Stream() : _i(0), _j(0) {
       }
 
       //destructor
       ~RC4Stream() {
-         delete[] _permutationArray;
       }
      
       //Key class which instantiates the rc4 key 
       class Key {
-         protected:
-            uint8_t* _key;
-
          public:
             static const int KEY_LENGTH = 16; //_key length (no of bytes), 16 is used in TLS
-            
-            Key() : _key(new uint8_t[KEY_LENGTH]) {}
+         protected:
+            uint8_t _key[KEY_LENGTH];
 
-            ~Key() {delete[] _key; }
+         public:
+            Key() {}
+
+            ~Key() {}
             
             //method returns the appropriate byte of the _key, modulo the KEY_LENGTH
             virtual uint8_t getModuloLength(int i) {
@@ -66,7 +67,7 @@ class RC4Stream
                   virtual void initializeRandomNoGen() {}
 
                   //method to provide random data to be the value of the provided key
-                  virtual void selectRandomKey(RC4Stream::Key *key) {}
+                  virtual void selectRandomKey(RC4Stream::Key &key) {}
                   virtual ~RandomSource() {}
             };
 
@@ -80,7 +81,7 @@ class RC4Stream
        * description - permutes the elements of the permutation array according to the RC4 Key Scheduling Algorithm and initialises the internal state variables
        * Assumes that the rc4 stream permutation array and the key array have been assigned!
        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-       virtual void keySchedule(RC4Stream::Key *key){
+       virtual void keySchedule(RC4Stream::Key &key){
 
          //initialize the permutation array to be the identity permutation
          for (int i = 0; i < PERMUTATION_ARRAY_LENGTH ; i++) {
@@ -90,7 +91,7 @@ class RC4Stream
          //schedule the permutation array
          unsigned int j = 0;
          for (int i = 0; i < PERMUTATION_ARRAY_LENGTH; i++) {
-            j = (j + (unsigned int) _permutationArray[i] + (unsigned int) key->getModuloLength(i)) % PERMUTATION_ARRAY_LENGTH;
+            j = (j + (unsigned int) _permutationArray[i] + (unsigned int) key.getModuloLength(i)) % PERMUTATION_ARRAY_LENGTH;
             //swap ith and jth elements
             uint8_t tmp = _permutationArray[i];
             _permutationArray[i] = _permutationArray[j];

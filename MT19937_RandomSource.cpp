@@ -28,7 +28,7 @@ class MT19937_RandomSource : public RC4Stream::Key::RandomSource {
       }
 
       //generate the random key - assumes the key provided is of length KEY_LENGTH bytes
-      void selectRandomKey(RC4Stream::Key *key){
+      void selectRandomKey(RC4Stream::Key &key){
               //get the number of required randome numbers from the twister
               int noOfRandsRequired = RC4Stream::Key::KEY_LENGTH/sizeof(std::mt19937::result_type) + 1;
               int randoms[noOfRandsRequired];
@@ -38,7 +38,7 @@ class MT19937_RandomSource : public RC4Stream::Key::RandomSource {
 
               for(int i = 0; i < RC4Stream::Key::KEY_LENGTH; i++){
                       //TODO review this assignment to confirm correctness
-                      key->setModuloLength(i, (uint8_t) ((randoms[i*sizeof(uint8_t)/sizeof(std::mt19937::result_type)] >> (sizeof(uint8_t)*(i % sizeof(std::mt19937::result_type)) )) & 0xff));
+                      key.setModuloLength(i, (uint8_t) ((randoms[i*sizeof(uint8_t)/sizeof(std::mt19937::result_type)] >> (sizeof(uint8_t)*(i % sizeof(std::mt19937::result_type)) )) & 0xff));
               }
       }
 
