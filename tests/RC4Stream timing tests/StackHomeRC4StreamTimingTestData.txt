@@ -1,0 +1,60 @@
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-11 10:19
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.3e-05
+10 & 0.000108
+100 & 0.00108
+1000 & 0.010838
+10000 & 0.089026
+100000 & 0.796209
+1000000 & 7.95953
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-11 10:20
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.5e-05
+10 & 0.000109
+100 & 0.001084
+1000 & 0.009771
+10000 & 0.082268
+100000 & 0.806683
+1000000 & 7.96886
+
+===============================================================
+
+Test Name: No Key Scheduling RC4 Stream Test
+Date/Time: 2015-5-11 10:39
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.2e-05
+10 & 8.1e-05
+100 & 0.000795
+1000 & 0.00693
+10000 & 0.050524
+100000 & 0.48608
+1000000 & 4.77502
+
+===============================================================
+
+Test Name: No Key Scheduling RC4 Stream Test
+Date/Time: 2015-5-11 10:39
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 5.3e-05
+100 & 0.000505
+1000 & 0.004952
+10000 & 0.052457
+100000 & 0.504783
+1000000 & 5.12362
