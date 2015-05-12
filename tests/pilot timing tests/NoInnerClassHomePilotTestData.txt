@@ -1,0 +1,60 @@
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-11 20:52
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.8e-05
+10 & 0.000135
+100 & 0.001334
+1000 & 0.011314
+10000 & 0.084983
+100000 & 0.812821
+1000000 & 8.12103
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-11 20:52
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.5e-05
+10 & 0.000108
+100 & 0.001081
+1000 & 0.009646
+10000 & 0.082745
+100000 & 0.805365
+1000000 & 8.00471
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-11 20:54
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.7e-05
+10 & 0.000134
+100 & 0.001333
+1000 & 0.0102
+10000 & 0.081276
+100000 & 0.793337
+1000000 & 7.944
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-11 20:54
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.5e-05
+10 & 0.00011
+100 & 0.001081
+1000 & 0.009749
+10000 & 0.08256
+100000 & 0.795091
+1000000 & 7.95895

@@ -121,6 +121,36 @@ Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
 
 ===============================================================
 
+Test Name: Permutation Scheduling without initialisation RC4 Stream Test
+Date/Time: 2015-5-12 14:29
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.8e-05
+10 & 0.000146
+100 & 0.001439
+1000 & 0.011472
+10000 & 0.083422
+100000 & 0.74773
+1000000 & 7.54977
+
+===============================================================
+
+Test Name: Permutation Scheduling without initialisation RC4 Stream Test
+Date/Time: 2015-5-12 14:29
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.5e-05
+10 & 0.000109
+100 & 0.001023
+1000 & 0.009331
+10000 & 0.077962
+100000 & 0.764602
+1000000 & 7.583
+
+===============================================================
+
 Test Name: Permutation Scheduling with no key lookup, RC4 Stream Test
 Date/Time: 2015-5-11 17:22
 Length of each RC4 stream in bytes: 257
@@ -148,3 +178,33 @@ Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
 10000 & 0.068964
 100000 & 0.644276
 1000000 & 6.37324
+
+===============================================================
+
+Test Name: Key Get Modulo Length Calling Timing test in RC4 Stream
+Date/Time: 2015-5-12 14:33
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.9e-05
+10 & 0.000117
+100 & 0.001137
+1000 & 0.00948
+10000 & 0.070685
+100000 & 0.68279
+1000000 & 6.85148
+
+===============================================================
+
+Test Name: Key Get Modulo Length Calling Timing test in RC4 Stream
+Date/Time: 2015-5-12 14:33
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1.3e-05
+10 & 9.5e-05
+100 & 0.000928
+1000 & 0.008612
+10000 & 0.071251
+100000 & 0.687288
+1000000 & 6.82135

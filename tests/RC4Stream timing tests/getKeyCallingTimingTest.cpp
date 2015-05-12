@@ -22,12 +22,12 @@ class KeyLookupTest : public RC4Stream::Key {
       ~KeyLookupTest() {}
 
       virtual uint8_t getModuloLength(int i) {
-         //TEST assume i is positive and avoid branching to check
-         return RC4Stream::Key::_key[i % RC4Stream::Key::KEY_LENGTH];
+         //TEST static return to test whether the calling process is delayed
+         return 0x00; //RC4Stream::Key::_key[i % RC4Stream::Key::KEY_LENGTH];
       }
 };
 //variables used in documenting the test
-const char* TEST_NAME = "Key Lookup Timing test in RC4 Stream";
+const char* TEST_NAME = "Key Get Modulo Length Calling Timing test in RC4 Stream";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
