@@ -15,8 +15,8 @@ class RC4Stream
 
    protected:
       uint8_t _permutationArray[PERMUTATION_ARRAY_LENGTH]; //the permutation array which must have length PERMUTATION_ARRAY_LENGTH and contain one of each byte value < this length
-      int _i; // the first internal state which increments on each output, 0 <= i < PERMUTATION_ARRAY_LENGTH
-      int _j; // the second internal state which defined by RC4
+      uint8_t _i; // the first internal state which increments on each output, 0 <= i < PERMUTATION_ARRAY_LENGTH
+      uint8_t _j; // the second internal state which defined by RC4
 
    public:
 
@@ -41,16 +41,13 @@ class RC4Stream
             ~Key() {}
             
             //method returns the appropriate byte of the _key, modulo the KEY_LENGTH
-            virtual uint8_t getModuloLength(int i) {
-               i = i % KEY_LENGTH;
-               return (i > -1 ? _key[i] : _key[i + KEY_LENGTH]);
+            virtual uint8_t getModuloLength(uint8_t i) {
+               return _key[i % KEY_LENGTH];
             }
             
             //Method to set the ith (modulo KEY_LENGTH) byte
-            virtual void setModuloLength( int i, uint8_t byte ) {
-               i = i % KEY_LENGTH;
-               i = (i > -1 ? i : i + KEY_LENGTH);
-               _key[i] = byte;
+            virtual void setModuloLength( uint8_t i, uint8_t byte ) {
+               _key[i % KEY_LENGTH] = byte;
             }
 
             /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -88,13 +85,15 @@ class RC4Stream
          }
          
          //schedule the permutation array
-         unsigned int j = 0;
-         for (int i = 0; i < PERMUTATION_ARRAY_LENGTH; i++) {
-            j = (j + (unsigned int) _permutationArray[i] + (unsigned int) key.getModuloLength(i)) % PERMUTATION_ARRAY_LENGTH;
+         uint8_t j = 0;
+         uint8_t i = 0;
+         for (int k = 0; k < PERMUTATION_ARRAY_LENGTH; k++) {
+            j = (j +  _permutationArray[i] +  key.getModuloLength(i));//REMOVED MODULO
             //swap ith and jth elements
             uint8_t tmp = _permutationArray[i];
             _permutationArray[i] = _permutationArray[j];
             _permutationArray[j] = tmp;  
+            i = i + 1;
          }
          //initialize the state variables 
          _i = 0;
@@ -109,8 +108,8 @@ class RC4Stream
        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
       virtual uint8_t PRGRound()
       {
-            _i = (_i + 1) % PERMUTATION_ARRAY_LENGTH;
-            _j = (_j + _permutationArray[_i]) % PERMUTATION_ARRAY_LENGTH;
+            _i = (_i + 1); //Removed modulo
+            _j = (_j + _permutationArray[_i]); //removed modulo
 
             //swap ith and jth elements
             uint8_t tmp = _permutationArray[_i];
@@ -118,7 +117,7 @@ class RC4Stream
             _permutationArray[_j] = tmp;  
             
             //return the output
-            return _permutationArray[(_permutationArray[_i] + _permutationArray[_j]) % PERMUTATION_ARRAY_LENGTH];  
+            return _permutationArray[(uint8_t) (_permutationArray[_i] + tmp) /*_permutationArray[_j]*/]; //removed modulo inside lookup
       }
 };
 

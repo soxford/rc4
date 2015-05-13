@@ -35,10 +35,11 @@ class MT19937_RandomSource : public RC4Stream::Key::RandomSource {
               for(int i = 0; i < noOfRandsRequired; i++){
                       randoms[i] = MT();	
               }
-
-              for(int i = 0; i < RC4Stream::Key::KEY_LENGTH; i++){
+               uint8_t i = 0;
+              for(int k = 0; k < RC4Stream::Key::KEY_LENGTH; k++){
                       //TODO review this assignment to confirm correctness
                       key.setModuloLength(i, (uint8_t) ((randoms[i*sizeof(uint8_t)/sizeof(std::mt19937::result_type)] >> (sizeof(uint8_t)*(i % sizeof(std::mt19937::result_type)) )) & 0xff));
+                      i = i + 1;
               }
       }
 
