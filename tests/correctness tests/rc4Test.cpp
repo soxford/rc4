@@ -42,8 +42,10 @@ int main(int argc, const char *argv[])
    begin = clock();
    for (int i = 0; i < 3; i++) {
       //assign the key value
-      for(int j = 0; j < RC4Stream::Key::KEY_LENGTH; j++) {
+      uint8_t j = 0;
+      for(int k = 0;  k < RC4Stream::Key::KEY_LENGTH;k++) {
          key.setModuloLength(j, keys[i][j]);
+         j = j + 1;
       }
      //schedule key
      rc4Stream.keySchedule(key);
