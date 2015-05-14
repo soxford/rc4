@@ -150,6 +150,208 @@ class RC4Stream
             //return the output
             return _permutationArray[(_permutationArray[_i] + _permutationArray[_j]) & MASK_8];  
       }
+      
+      /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+       * RC4 Pseudo Random Generation Algorithm batch output method - outputs the first 16 bytes
+       * Description: Generates the next out_length bytes of output from the RC4 stream
+       * input - a useable output array to store the output bytes.
+       * precondition - 16 <= length of the array, 
+       * percondition - WARNING to use this method correctly it must be the case that no PRG rounds can have been called since the last key scheduling.
+       * output - void
+       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+      virtual void PRGOutputFirst16BytesToArray(uint8_t output_array[]) {
+	    uint8_t tmpI, tmpJ, total, result;
+	    // it is assumed that _i = _j = 0, as now PRG yet done
+	    // INITIAL BLOCK
+	    tmpI = _permutationArray[1]; //lookup, _i = 0
+	    _j = (_j + tmpI) & MASK_8;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[1] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 2
+	    tmpI = _permutationArray[2];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[0] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[2] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 3
+	    tmpI = _permutationArray[3];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[1] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[3] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 4
+	    tmpI = _permutationArray[4];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[2] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[4] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 5
+	    tmpI = _permutationArray[5];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[3] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[5] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 6
+	    tmpI = _permutationArray[6];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[4] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[6] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 7
+	    tmpI = _permutationArray[7];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[5] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[7] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 8
+	    tmpI = _permutationArray[8];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[6] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[8] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 9
+	    tmpI = _permutationArray[9];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[7] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[9] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 10
+	    tmpI = _permutationArray[10];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[8] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[10] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 11
+	    tmpI = _permutationArray[11];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[9] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[11] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 12
+	    tmpI = _permutationArray[12];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[10] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[12] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 13
+	    tmpI = _permutationArray[13];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[11] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[13] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 14
+	    tmpI = _permutationArray[14];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[12] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[14] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 15
+	    tmpI = _permutationArray[15];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[13] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[15] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 16
+	    tmpI = _permutationArray[16];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[14] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[16] = tmpJ;		  
+	    total = tmpI + tmpJ;
+
+	    _i = 16;	//ensure _i is correct
+
+	    result = _permutationArray[total];  
+	    output_array[15] = result; //final allocation
+      }
+
+      /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+       * RC4 Pseudo Random Generation Algorithm batch output method - outputs the first 257 Bytes
+       * Description: Generates the next out_length bytes of output from the RC4 stream
+       * input - a useable output array to store the output bytes.
+       * precondition - 257 <= length of the array, 
+       * percondition - WARNING to use this method correctly it must be the case that no PRG rounds can have been called since the last key scheduling.
+       * output - void
+       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+      virtual void PRGOutputFirst257BytesToArray(uint8_t output_array[]) {
+      }
 };
 
 

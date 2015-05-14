@@ -73,3 +73,18 @@ Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
 10000 & 0.046392
 100000 & 0.462476
 1000000 & 4.66453
+
+===============================================================
+
+Test Name: Control Test with MT19337 key allocation loop unrolled
+Date/Time: 2015-5-14 15:12
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 9e-06
+10 & 6.7e-05
+100 & 0.000657
+1000 & 0.006134
+10000 & 0.055345
+100000 & 0.462157
+1000000 & 4.61058
