@@ -8,6 +8,8 @@
 #include <cstdint>
 
 #define RC4_STREAM_GUARD 0
+#define MASK_4 0xf
+#define MASK_8 0xff
 class RC4Stream
 {
    public:
@@ -32,26 +34,54 @@ class RC4Stream
       class Key {
          public:
             static const int KEY_LENGTH = 16; //_key length (no of bytes), 16 is used in TLS
-         protected:
-            uint8_t _key[KEY_LENGTH];
-
-         public:
+	    //BREAK ENCAPSULATION TO AVOID COST OF GETTER METHOD CALL (STACK FRAME SET UO OVERHEAD ETC.)
+            uint8_t _key[RC4Stream::PERMUTATION_ARRAY_LENGTH]; // invariant _key[i] == _key[i % KEY_LENGTH]
             Key() {}
 
             ~Key() {}
             
-            //method returns the appropriate byte of the _key, modulo the KEY_LENGTH
+            //method returns the appropriate byte of the _key, modulo the KEY_LENGTH - assumes that 0 <= i < 256 = PERMUTATION_ARRAY_LENGTH
             virtual uint8_t getModuloLength(int i) {
-               i = i % KEY_LENGTH;
-               return (i > -1 ? _key[i] : _key[i + KEY_LENGTH]);
+               return _key[i];
             }
             
-            //Method to set the ith (modulo KEY_LENGTH) byte
+            //Method to set the ith (modulo KEY_LENGTH) byte, loop unravelled to optimise
             virtual void setModuloLength( int i, uint8_t byte ) {
-               i = i % KEY_LENGTH;
-               i = (i > -1 ? i : i + KEY_LENGTH);
-               _key[i] = byte;
-            }
+               	i = i & MASK_4; //0 <= i < 16
+		int j = i + 16;
+		int k = i + 32;
+               	_key[i] = byte;
+		_key[j] = byte;
+		i += 48;	// 48 <= i < 62
+		_key[k] = byte;
+		j += 48;
+		_key[i] = byte;
+		k += 48;
+		_key[j] = byte;
+		i += 48;	// 96 <= i < 112
+		_key[k] = byte;
+		j += 48;
+		_key[i] = byte;
+		k += 48;
+		_key[j] = byte;
+		i += 48;	// 144 <= i < 160
+		_key[k] = byte;
+		j += 48;
+		_key[i] = byte;
+		k += 48;
+		_key[j] = byte;
+		i += 48;	// 192 <= i < 208
+		_key[k] = byte;
+		j += 48;
+		_key[i] = byte;
+		k += 48;
+		_key[j] = byte;
+		i += 48;	// 240 <= i < 256
+		_key[k] = byte;
+		_key[i] = byte;
+		
+	    }
+       
 
             /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
              * Title: RandomSource
@@ -90,7 +120,7 @@ class RC4Stream
          //schedule the permutation array
          unsigned int j = 0;
          for (int i = 0; i < PERMUTATION_ARRAY_LENGTH; i++) {
-            j = (j + (unsigned int) _permutationArray[i] + (unsigned int) key.getModuloLength(i)) % PERMUTATION_ARRAY_LENGTH;
+            j = (j + (unsigned int) _permutationArray[i] + (unsigned int) key._key[i]) & MASK_8;
             //swap ith and jth elements
             uint8_t tmp = _permutationArray[i];
             _permutationArray[i] = _permutationArray[j];
@@ -109,8 +139,8 @@ class RC4Stream
        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
       virtual uint8_t PRGRound()
       {
-            _i = (_i + 1) % PERMUTATION_ARRAY_LENGTH;
-            _j = (_j + _permutationArray[_i]) % PERMUTATION_ARRAY_LENGTH;
+            _i = (_i + 1) & MASK_8;
+            _j = (_j + _permutationArray[_i]) & MASK_8;
 
             //swap ith and jth elements
             uint8_t tmp = _permutationArray[_i];
@@ -118,7 +148,7 @@ class RC4Stream
             _permutationArray[_j] = tmp;  
             
             //return the output
-            return _permutationArray[(_permutationArray[_i] + _permutationArray[_j]) % PERMUTATION_ARRAY_LENGTH];  
+            return _permutationArray[(_permutationArray[_i] + _permutationArray[_j]) & MASK_8];  
       }
 };
 

@@ -1,0 +1,75 @@
+
+===============================================================
+
+Test Name: Control Test before optimisation
+Date/Time: 2015-5-14 13:7
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 1e-05
+10 & 6.2e-05
+100 & 0.000581
+1000 & 0.005878
+10000 & 0.059394
+100000 & 0.595775
+1000000 & 5.88408
+
+===============================================================
+
+Test Name: Control Test with getModuloLength returning a byte by straight lookup
+Date/Time: 2015-5-14 13:31
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 5.7e-05
+100 & 0.000589
+1000 & 0.005863
+10000 & 0.056475
+100000 & 0.567064
+1000000 & 5.68586
+
+===============================================================
+
+Test Name: Control Test with setModuloLength optimised to an unrolled loop
+Date/Time: 2015-5-14 13:49
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 5.8e-05
+100 & 0.000587
+1000 & 0.005796
+10000 & 0.056171
+100000 & 0.562049
+1000000 & 5.6555
+
+===============================================================
+
+Test Name: Control Test with all Modulo aritmetic replaced by masking
+Date/Time: 2015-5-14 13:54
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 8e-06
+10 & 5.2e-05
+100 & 0.000522
+1000 & 0.005453
+10000 & 0.052253
+100000 & 0.518856
+1000000 & 5.25206
+
+===============================================================
+
+Test Name: Control Test with encapsulation of key array removed to allow direct lookup
+Date/Time: 2015-5-14 14:3
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 9e-06
+10 & 5e-05
+100 & 0.000482
+1000 & 0.004741
+10000 & 0.046392
+100000 & 0.462476
+1000000 & 4.66453
