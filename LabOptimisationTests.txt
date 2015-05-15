@@ -88,3 +88,48 @@ Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
 10000 & 0.055345
 100000 & 0.462157
 1000000 & 4.61058
+
+===============================================================
+
+Test Name: Control Test with PRG loop unrolled using PRGOutputFirst257BytesToArray - before removing PRGOutputFirst16BytesToArray
+Date/Time: 2015-5-15 15:33
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 8e-06
+10 & 4.7e-05
+100 & 0.000453
+1000 & 0.00453
+10000 & 0.04339
+100000 & 0.437735
+1000000 & 4.33318
+
+===============================================================
+
+Test Name: Control Test with PRG loop unrolled using PRGFirst257Bytes - after removing PRGOutputFirst16BytesToArray
+Date/Time: 2015-5-15 15:38
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 4.6e-05
+100 & 0.000457
+1000 & 0.004578
+10000 & 0.043832
+100000 & 0.420359
+1000000 & 4.23208
+
+===============================================================
+
+Test Name: Control Test with PRG loop unrolled using PRGFirst257Bytes - after removing PRGOutputFirst16BytesToArray
+Date/Time: 2015-5-15 15:40
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 4.4e-05
+100 & 0.000419
+1000 & 0.00423
+10000 & 0.04185
+100000 & 0.422446
+1000000 & 4.24481

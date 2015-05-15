@@ -13,7 +13,7 @@
 #include "../MT19937_RandomSource.cpp"
 
 //variables used in documenting the test
-const char* TEST_NAME = "Inlined/Optimised Control Test";
+const char* TEST_NAME = "Control Test with PRG loop unrolled";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257; //IF YOU CHANGE THIS THEN MAKE SURE YOU USE THE RIGHT PRGOutput METHOD FOR THE REQUIRED LENGTH OF OUTPUT
 

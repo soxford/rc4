@@ -152,197 +152,6 @@ class RC4Stream
       }
       
       /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-       * RC4 Pseudo Random Generation Algorithm batch output method - outputs the first 16 bytes
-       * Description: Generates the next out_length bytes of output from the RC4 stream
-       * input - a useable output array to store the output bytes.
-       * precondition - 16 <= length of the array, 
-       * percondition - WARNING to use this method correctly it must be the case that no PRG rounds can have been called since the last key scheduling.
-       * output - void
-       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-      virtual void PRGOutputFirst16BytesToArray(uint8_t output_array[]) {
-	    uint8_t tmpI, tmpJ, total, result;
-	    // it is assumed that _i = _j = 0, as now PRG yet done
-	    // INITIAL BLOCK
-	    tmpI = _permutationArray[1]; //lookup, _i = 0
-	    _j = (_j + tmpI) & MASK_8;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[1] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 2
-	    tmpI = _permutationArray[2];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[0] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[2] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 3
-	    tmpI = _permutationArray[3];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[1] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[3] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 4
-	    tmpI = _permutationArray[4];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[2] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[4] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 5
-	    tmpI = _permutationArray[5];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[3] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[5] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 6
-	    tmpI = _permutationArray[6];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[4] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[6] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 7
-	    tmpI = _permutationArray[7];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[5] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[7] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 8
-	    tmpI = _permutationArray[8];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[6] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[8] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 9
-	    tmpI = _permutationArray[9];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[7] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[9] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 10
-	    tmpI = _permutationArray[10];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[8] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[10] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 11
-	    tmpI = _permutationArray[11];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[9] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[11] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 12
-	    tmpI = _permutationArray[12];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[10] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[12] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 13
-	    tmpI = _permutationArray[13];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[11] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[13] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 14
-	    tmpI = _permutationArray[14];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[12] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[14] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 15
-	    tmpI = _permutationArray[15];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[13] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[15] = tmpJ;		  
-	    total = tmpI + tmpJ;
-	    //Round 16
-	    tmpI = _permutationArray[16];
-	    result = _permutationArray[total];  
-	    _j = (_j + tmpI) & MASK_8;
-
-	    output_array[14] = result;
-
-	    tmpJ = _permutationArray[_j];
-	    _permutationArray[_j] = tmpI;
-	    _permutationArray[16] = tmpJ;		  
-	    total = tmpI + tmpJ;
-
-	    _i = 16;	//ensure _i is correct
-
-	    result = _permutationArray[total];  
-	    output_array[15] = result; //final allocation
-      }
-
-      /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
        * RC4 Pseudo Random Generation Algorithm batch output method - outputs the first 257 Bytes
        * Description: Generates the next out_length bytes of output from the RC4 stream
        * input - a useable output array to store the output bytes.
@@ -351,7 +160,383 @@ class RC4Stream
        * output - void
        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
       virtual void PRGOutputFirst257BytesToArray(uint8_t output_array[]) {
-      }
+	    uint8_t tmpI, tmpJ, total, result;
+	    // it is assumed that _i = _j = 0, as now PRG yet done
+	    tmpI = _permutationArray[_i + 1]; //lookup, _i = 0
+	    _j = (_j + tmpI) & MASK_8;
+	    for( /* _i= 0 */ ; _i < 240 ; _i += 16 ) {
+		    // INITIAL BLOCK
+		   // done before the loop or in prior iteration: tmpI = _permutationArray[_i + 1]; //lookup, _i = 0
+		    //done before the loop of in the prior iteration: _j = (_j + tmpI) & MASK_8;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 1] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 2
+		    tmpI = _permutationArray[_i + 2];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 0] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 2] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 3
+		    tmpI = _permutationArray[_i + 3];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 1] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 3] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 4
+		    tmpI = _permutationArray[_i + 4];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 2] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 4] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 5
+		    tmpI = _permutationArray[_i + 5];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 3] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 5] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 6
+		    tmpI = _permutationArray[_i + 6];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 4] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 6] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 7
+		    tmpI = _permutationArray[_i + 7];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 5] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 7] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 8
+		    tmpI = _permutationArray[_i + 8];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 6] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 8] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 9
+		    tmpI = _permutationArray[_i + 9];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 7] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 9] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 10
+		    tmpI = _permutationArray[_i + 10];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 8] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 10] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 11
+		    tmpI = _permutationArray[_i + 11];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 9] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 11] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 12
+		    tmpI = _permutationArray[_i + 12];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 10] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 12] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 13
+		    tmpI = _permutationArray[_i + 13];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 11] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 13] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 14
+		    tmpI = _permutationArray[_i + 14];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 12] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 14] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 15
+		    tmpI = _permutationArray[_i + 15];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 13] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[_i + 15] = tmpJ;		  
+		    total = tmpI + tmpJ;
+		    //Round 16
+		    tmpI = _permutationArray[ (_i + 16)];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+
+		    output_array[_i + 14] = result;
+
+		    tmpJ = _permutationArray[_j];
+		    _permutationArray[_j] = tmpI;
+		    _permutationArray[(_i + 16 )] = tmpJ;		  
+		    total = tmpI + tmpJ;
+
+		    tmpI = _permutationArray[ (_i + 17)];
+		    result = _permutationArray[total];  
+		    _j = (_j + tmpI) & MASK_8;
+		    output_array[_i + 15] = result; //final allocation of loop
+	} //end of loop
+
+	//241st - 257th round
+	    // Round 241
+	    //done in the loop above tmpI = _permutationArray[241]; //lookup, _i = 241
+	    // done in the loop above _j = (_j + tmpI) & MASK_8;
+	
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[241] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 242
+	    tmpI = _permutationArray[242];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[240] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[242] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 243
+	    tmpI = _permutationArray[243];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[241] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[243] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 244
+	    tmpI = _permutationArray[244];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[242] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[244] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 245
+	    tmpI = _permutationArray[245];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[243] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[245] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 246
+	    tmpI = _permutationArray[246];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[244] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[246] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 247
+	    tmpI = _permutationArray[247];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[245] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[247] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 248
+	    tmpI = _permutationArray[248];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[246] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[248] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 249
+	    tmpI = _permutationArray[249];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[247] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[249] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 250
+	    tmpI = _permutationArray[250];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[248] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[250] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 251
+	    tmpI = _permutationArray[251];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[249] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[251] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 252
+	    tmpI = _permutationArray[252];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[250] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[252] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 253
+	    tmpI = _permutationArray[253];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[251] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[253] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 254
+	    tmpI = _permutationArray[254];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[252] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[254] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 255
+	    tmpI = _permutationArray[255];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[253] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[255] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 256
+	    tmpI = _permutationArray[0];  // _i has wrapped around!!
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[254] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[0] = tmpJ;		  
+	    total = tmpI + tmpJ;
+	    //Round 257
+	    tmpI = _permutationArray[1];
+	    result = _permutationArray[total];  
+	    _j = (_j + tmpI) & MASK_8;
+
+	    output_array[255] = result;
+
+	    tmpJ = _permutationArray[_j];
+	    _permutationArray[_j] = tmpI;
+	    _permutationArray[1] = tmpJ;		  
+	    total = tmpI + tmpJ;
+
+	    _i = 1; 		//ensure _i is correct
+
+	    result = _permutationArray[total];  
+	    output_array[256] = result; //final allocation of loop
+		
+      }//end of 257 output method
 };
 
 
