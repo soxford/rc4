@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: heapHistogramTest.cpp
+ * Title: controlTest.cpp 
  * Author: Simon Campbell, <simonhmcampbell@gmail.com>
- * Description: A timing test using a heap allocated histogram to compare to the control test
+ * Description: A control test for comparison to variants for the identification of bottlenecks
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -10,12 +10,12 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-#include "../../MT19937_RandomSource.cpp"
+#include "../MT19937_RandomSource.cpp"
 
 //variables used in documenting the test
-const char* TEST_NAME = "Heap Allocated Histogram Test";
+const char* TEST_NAME = "Control Test with PRG loop unrolled";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
-int STREAM_OUTPUT_LENGTH = 257;
+int STREAM_OUTPUT_LENGTH = 257; //IF YOU CHANGE THIS THEN MAKE SURE YOU USE THE RIGHT PRGOutput METHOD FOR THE REQUIRED LENGTH OF OUTPUT
 
 int MAX_LOOPCOUNT = 1000000;
 
@@ -52,10 +52,7 @@ int main(int argc, const char *argv[])
                               << endl;
    logFile << "Length of each RC4 stream in bytes: " << STREAM_OUTPUT_LENGTH << endl;
    //allocate space to hold table of results
-   long** histograms = new long*[STREAM_OUTPUT_LENGTH];
-   for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-      histograms[i] = new long[RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
-   } 
+   long histograms[STREAM_OUTPUT_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
    for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
       for (int j = 0; j < RC4Stream::PERMUTATION_ARRAY_LENGTH; j++) {
          histograms[i][j] = 0;
@@ -64,7 +61,7 @@ int main(int argc, const char *argv[])
 
    //assign space for the key;
    RC4Stream::Key key;
-   
+
    //allocate space for the RC4 stream
    RC4Stream rc4Stream;
 
@@ -76,7 +73,8 @@ int main(int argc, const char *argv[])
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
-   
+   uint8_t outputs[STREAM_OUTPUT_LENGTH];
+ 
    //record test data
    logFile << "Test Data:" << endl;
    logFile << FIELDS << endl;
@@ -93,10 +91,11 @@ int main(int argc, const char *argv[])
          
         //rekey
         rc4Stream.keySchedule(key);
-         
-        //run RC4 stream algorithm and collect output in histogram counters
-        for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-           histograms[i][rc4Stream.PRGRound()]++; //increment the relevant histogram count
+        //get output from the RC4 stream 
+ 	rc4Stream.PRGOutputFirst257BytesToArray(outputs);
+        //collect output in histogram counters
+        for (int j = 0; j < STREAM_OUTPUT_LENGTH; j++) {
+           histograms[j][outputs[j]]++; //increment the relevant histogram count
         }
       }
 
@@ -105,14 +104,6 @@ int main(int argc, const char *argv[])
       //report time_spent
       logFile << loopcount << " & " << time_spent << endl;
    }
-
-
-
-   //clean up
-   for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-      delete histograms[i];
-   }
-   delete histograms;
 
    //close the file and return
    logFile.close();

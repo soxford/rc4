@@ -1,0 +1,76 @@
+LabOptimPilotTests - profiling tests after initial optimisation efforts to identify next focus areas.
+===============================================================
+
+Test Name: Control Test with optimised PRGFirst257Bytes method (although _i and _j are initialised each time)
+Date/Time: 2015-5-18 13:56
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 4.4e-05
+100 & 0.000435
+1000 & 0.004302
+10000 & 0.042441
+100000 & 0.424848
+1000000 & 4.29792
+
+===============================================================
+
+Test Name: No Re-Keying Test
+Date/Time: 2015-5-18 13:57
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 4.5e-05
+100 & 0.000393
+1000 & 0.003435
+10000 & 0.032609
+100000 & 0.278469
+1000000 & 2.79684
+
+===============================================================
+
+Test Name: No RC4 Stream Generation Test
+Date/Time: 2015-5-18 14:0
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 8e-06
+10 & 6.4e-05
+100 & 0.000488
+1000 & 0.004799
+10000 & 0.042893
+100000 & 0.292068
+1000000 & 2.73551
+
+===============================================================
+
+Test Name: Static Key Test
+Date/Time: 2015-5-18 14:3
+Length of each RC4 stream in bytes: 257
+Test Data:
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 4.5e-05
+100 & 0.000424
+1000 & 0.004265
+10000 & 0.043344
+100000 & 0.433125
+1000000 & 4.29062
+
+===============================================================
+
+Test Name: No Histogram Lookup Test
+Date/Time: 2015-5-18 14:7
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 6e-06
+10 & 4.1e-05
+100 & 0.0004
+1000 & 0.004027
+10000 & 0.040206
+100000 & 0.400139
+1000000 & 3.98334

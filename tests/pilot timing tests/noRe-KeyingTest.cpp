@@ -80,8 +80,9 @@ int main(int argc, const char *argv[])
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
-
-   //record test data 
+   uint8_t outputs[STREAM_OUTPUT_LENGTH];
+ 
+   //record test data
    logFile << "Test Data:" << endl;
    logFile << FIELDS << endl;
 
@@ -92,15 +93,16 @@ int main(int argc, const char *argv[])
       //loop to generate multiple stream outputs
       for (int i = 0; i < loopcount; i++) {
         
-        //random key generation still included even though the key is not reset to compare precisely the rekeying step to the control test
+        //random key generation
         randomSource.selectRandomKey(key);
          
-        //TEST rekey is not done in this test
+        //TEST No Re-key
         //rc4Stream.keySchedule(key);
-         
-        //run RC4 stream algorithm and collect output in histogram counters
-        for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-           histograms[i][rc4Stream.PRGRound()]++; //increment the relevant histogram count
+        //get output from the RC4 stream 
+ 	rc4Stream.PRGOutputFirst257BytesToArray(outputs);
+        //collect output in histogram counters
+        for (int j = 0; j < STREAM_OUTPUT_LENGTH; j++) {
+           histograms[j][outputs[j]]++; //increment the relevant histogram count
         }
       }
 

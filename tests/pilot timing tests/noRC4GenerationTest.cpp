@@ -73,7 +73,8 @@ int main(int argc, const char *argv[])
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
-   
+   uint8_t outputs[STREAM_OUTPUT_LENGTH];
+ 
    //record test data
    logFile << "Test Data:" << endl;
    logFile << FIELDS << endl;
@@ -88,14 +89,13 @@ int main(int argc, const char *argv[])
         //random key generation
         randomSource.selectRandomKey(key);
          
-        //rekey
+        //re-key
         rc4Stream.keySchedule(key);
-         
-        //run RC4 stream algorithm and collect output in histogram counters
-        for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
-           //TEST we do not use PRGRound() method, instead just a static lookup based on the row number to compare the timing
-           //histograms[i][rc4Stream.PRGRound()]++; //increment the relevant histogram count
-           histograms[i][i % RC4Stream::PERMUTATION_ARRAY_LENGTH]++;
+        //TEST don't get output from the RC4 stream 
+ 	//rc4Stream.PRGOutputFirst257BytesToArray(outputs);
+        //collect output in histogram counters
+        for (int j = 0; j < STREAM_OUTPUT_LENGTH; j++) {
+           histograms[j][outputs[j]]++; //increment the relevant histogram count
         }
       }
 

@@ -133,3 +133,63 @@ Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
 10000 & 0.04185
 100000 & 0.422446
 1000000 & 4.24481
+
+===============================================================
+
+Test Name: Control Test with initialization of the _permutationArray to the identity permutation partially unrolled (16 assignments per loop)
+Date/Time: 2015-5-18 14:27
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 8e-06
+10 & 4.2e-05
+100 & 0.000383
+1000 & 0.003901
+10000 & 0.038498
+100000 & 0.386161
+1000000 & 3.89174
+
+===============================================================
+
+Test Name: Control Test with initialization of the _permutationArray to the identity permutation partially unrolled (32 assignments per loop)
+Date/Time: 2015-5-18 14:31
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 8e-06
+10 & 4e-05
+100 & 0.000397
+1000 & 0.00387
+10000 & 0.03805
+100000 & 0.378994
+1000000 & 3.84246
+
+===============================================================
+
+Test Name: Control Test with initialization of the _permutationArray to the identity permutation partially unrolled (64 assignments per loop)
+Date/Time: 2015-5-18 15:13
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 4.4e-05
+100 & 0.00038
+1000 & 0.00386
+10000 & 0.038781
+100000 & 0.380729
+1000000 & 3.83837
+
+===============================================================
+
+Test Name: Control Test with _permutationArray key scheduling loop unrolled
+Date/Time: 2015-5-18 15:14
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 8e-06
+10 & 4.1e-05
+100 & 0.000384
+1000 & 0.00384
+10000 & 0.038474
+100000 & 0.380944
+1000000 & 3.82999
