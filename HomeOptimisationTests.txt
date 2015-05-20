@@ -1,7 +1,7 @@
 
 ===============================================================
 
-Test Name: Control Test
+Test Name: Control Test with clang and -Os flag
 Date/Time: 2015-5-20 14:53
 Length of each RC4 stream in bytes: 257
 Test Data:
@@ -16,7 +16,7 @@ Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
 
 ===============================================================
 
-Test Name: Control Test
+Test Name: Control Test with clang and -Os flag
 Date/Time: 2015-5-20 14:53
 Length of each RC4 stream in bytes: 257
 Test Data:
@@ -31,7 +31,7 @@ Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
 
 ===============================================================
 
-Test Name: Control Test
+Test Name: Control Test with clang and -Os flag
 Date/Time: 2015-5-20 14:55
 Length of each RC4 stream in bytes: 257
 Test Data:
