@@ -118,11 +118,12 @@ class RC4Stream
          }
          
          //schedule the permutation array
+         uint8_t tmp;
          unsigned int j = 0;
          for (int i = 0; i < PERMUTATION_ARRAY_LENGTH; i++) {
             j = (j + (unsigned int) _permutationArray[i] + (unsigned int) key._key[i]) & MASK_8;
             //swap ith and jth elements
-            uint8_t tmp = _permutationArray[i];
+            tmp = _permutationArray[i];
             _permutationArray[i] = _permutationArray[j];
             _permutationArray[j] = tmp;  
          }

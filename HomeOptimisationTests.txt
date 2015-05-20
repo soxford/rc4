@@ -43,3 +43,48 @@ Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
 10000 & 0.019337
 100000 & 0.183661
 1000000 & 1.81175
+
+===============================================================
+
+Test Name: Control Test with clang and -Os flag
+Date/Time: 2015-5-20 15:6
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 3e-06
+10 & 1.9e-05
+100 & 0.000192
+1000 & 0.001911
+10000 & 0.018587
+100000 & 0.180981
+1000000 & 1.81277
+
+===============================================================
+
+Test Name: Control Test with clang and -Os flag
+Date/Time: 2015-5-20 15:7
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 4e-06
+10 & 2e-05
+100 & 0.000192
+1000 & 0.001907
+10000 & 0.022129
+100000 & 0.181358
+1000000 & 1.81456
+
+===============================================================
+
+Test Name: Control Test with clang and -Os flag
+Date/Time: 2015-5-20 15:7
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 5e-06
+10 & 2.5e-05
+100 & 0.00025
+1000 & 0.002473
+10000 & 0.021231
+100000 & 0.18096
+1000000 & 1.8256
