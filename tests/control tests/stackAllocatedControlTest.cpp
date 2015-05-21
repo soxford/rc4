@@ -10,7 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
-#include "../MT19937_RandomSource.cpp"
+#include "../../MT19937_RandomSource.cpp"
 
 //variables used in documenting the test
 const char* TEST_NAME = "Control Test";

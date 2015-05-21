@@ -12,7 +12,7 @@ THIS CODE WILL NOT COMPILE, CLASS RC4Stream AND ITS INNER CLASSES HAVE BEEN REFA
 #include <iostream>
 #include <fstream>
 #include <time.h>
-#include "../MT19937_RandomSource.cpp"
+#include "../../MT19937_RandomSource.cpp"
 
 int outputLength = 257;
 int MAX_LOOPCOUNT = 10000000;
