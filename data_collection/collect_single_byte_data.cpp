@@ -3,6 +3,7 @@
 #include <string>
 #include <ctime>
 #include <fstream>
+#include <cstdio>
 #include "../../MT19937_RandomSource.cpp"
 
 //Experimental parameters
@@ -10,36 +11,40 @@ int BATCH_SIZE = (1 << 30); //the number of pages per batch
 int TOTAL_NO_OF_BATCHES = (1 << 5); //The number of batches to be run in this experiment
 int PAGE_LENGTH = 257; //The number of output bytes per page
 
+//function declarations
+void dumpSingleByteData(ostream &outStream, unsigned long ** histograms);
 using namespace std;
 
 int main(int argc, const char *argv[])
 {
     //TODO encapsulate in a try block
 
-        //TODO initialize the file names for data storage based on the date, time of starting the experiment
+        //initialize the file names for data storage based on the date, time of starting the experiment
         string tmpFileName0, tmpFileName1, dataOutputFileName;
         time_t t = time(0);   // get time now
         struct tm * now = localtime( & t );
-        tmpFileName0 = "0 SingleByteData " + (now->tm_year + 1900) + "-"
+        tmpFileName0 = "./single_byte_data/0 SingleByteData " + (now->tm_year + 1900) + "-"
                                            + (now->tm_mon + 1) + "-"
                                            +  now->tm_mday + " "
                                            +  now->tm_hour + "-"
                                            +  now->tm_min
                                            + ".tmp";
 
-        tmpFileName1 = "1 SingleByteData " + (now->tm_year + 1900) + "-"
+        tmpFileName1 = "./single_byte_data/1 SingleByteData " + (now->tm_year + 1900) + "-"
                                            + (now->tm_mon + 1) + "-"
                                            +  now->tm_mday + " "
                                            +  now->tm_hour + "-"
                                            +  now->tm_min
                                            + ".tmp";
 
-        dataOutputFileName = "SingleByteData " + (now->tm_year + 1900) + "-"
+        dataOutputFileName = "./single_byte_data/SingleByteData " + (now->tm_year + 1900) + "-"
                                                    + (now->tm_mon + 1) + "-"
                                                    +  now->tm_mday + " "
                                                    +  now->tm_hour + "-"
                                                    +  now->tm_min
                                                    + ".txt"; //TODO confirm file format
+        //declare to output files
+        ofstream tmpFile, dataOutputFile;
 
         //initialize the histogram and stream/key variables
         unsigned long histograms[PAGE_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH];
@@ -78,31 +83,40 @@ int main(int argc, const char *argv[])
 
             }
 
-            //TODO at the end of the batch output the histogram to a tmp file (tagged either 0 or 1 depending on the parity of the batch number, i.e. overwrite the last but one tmp file) include batch number and total so far and date/time (create a method for this which takes a file name in and writes in a usable format)
-            ofstream tmpFile;
+            //At the end of the batch output the histogram to a tmp file (tagged either 0 or 1 depending on the parity of the batch number, i.e. overwrite the last but one tmp file) include batch number and total so far and date/time (create a method for this which takes a file name in and writes in a usable format)
             if(batchNo & 1) {
                 tmpFile.open(tmpFileName0, ios::trunc);
             } else {
                 tmpFile.open(tmpFileName1, ios::trunc);
             }
-
-            //TODO confirm file format!!!!!!!!!
-            tmpFile << "histograms = [" << endl;
-            for(int i = 0; i < PAGE_LENGTH; i++) {
-                tmpfile << "\t";
-                for(int j = 0; j < RC4Stream::PERMUTATION_ARRAY_LENGTH; j++){
-                    tmpFile << histograms[i][j] << " ";   
-                }
-                tmpFile << ";" << endl;
-            }
-            tmpFile << "];" << endl;
             
-            tmpFile << endl << "batchNo = " << batchNo << ";" << endl;
+            dumpSingleByteData(tmpFile, histograms);
 
             tmpFile.close();
         }
 
-        //TODO once all batches are complete output the final histogram data to a final data file including total number of batches as well as (in a comment) the date time of completion
-        //TODO delete the tmp files
+        //once all batches are complete output the final histogram data to a final data file including total number of batches as well as (in a comment) the date time of completion
+        dataOutputFile.open(dataOutputFileName, ios::app);
+
+        // delete the tmp files
+        remove(tmpFileName0); 
+        remove(tmpFileName1);
     //TODO catch all exceptions and output a failure report including timing and batch number
+}
+
+
+//dumps the single byte histogram data to the outStream. Assumes that the histogram has dimensions PAGE_LENGTH and PERMUTATION_ARRAY_LENGTH.
+void dumpSingleByteData(ostream &outStream, unsigned long ** histograms){
+            //TODO confirm file format!!!!!!!!!
+            outStream << "histograms = [" << endl;
+            for(int i = 0; i < PAGE_LENGTH; i++) {
+                outStream << "\t";
+                for(int j = 0; j < RC4Stream::PERMUTATION_ARRAY_LENGTH; j++){
+                    outStream << histograms[i][j] << " ";   
+                }
+                outStream << ";" << endl;
+            }
+            outStream << "];" << endl;
+            
+            outStream << endl << "batchNo = " << batchNo << ";" << endl;
 }
