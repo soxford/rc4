@@ -1,0 +1,150 @@
+Pilot Tests with stack allocated variables and corrected construction of the MT19937 Random Source
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-23 20:2
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 4.8e-05
+100 & 0.000409
+1000 & 0.002358
+10000 & 0.022945
+100000 & 0.222469
+1000000 & 2.32224
+
+===============================================================
+
+Test Name: No Re-Keying Test
+Date/Time: 2015-5-23 20:2
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 7e-06
+10 & 4.7e-05
+100 & 0.000386
+1000 & 0.002195
+10000 & 0.016174
+100000 & 0.173909
+1000000 & 1.60817
+
+===============================================================
+
+Test Name: No RC4 Stream Generation Test
+Date/Time: 2015-5-23 20:2
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 4e-06
+10 & 1.2e-05
+100 & 0.000108
+1000 & 0.001075
+10000 & 0.01392
+100000 & 0.103236
+1000000 & 1.02418
+
+===============================================================
+
+Test Name: Static Key Test
+Date/Time: 2015-5-23 20:2
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 5e-06
+10 & 2.4e-05
+100 & 0.00021
+1000 & 0.002079
+10000 & 0.020073
+100000 & 0.197418
+1000000 & 1.97579
+
+===============================================================
+
+Test Name: No Histogram Lookup Test
+Date/Time: 2015-5-23 20:2
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 3e-06
+10 & 2e-05
+100 & 0.00019
+1000 & 0.001879
+10000 & 0.022073
+100000 & 0.180683
+1000000 & 1.80238
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-5-23 20:4
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 6e-06
+10 & 5e-05
+100 & 0.000411
+1000 & 0.002359
+10000 & 0.026103
+100000 & 0.220769
+1000000 & 2.20665
+
+===============================================================
+
+Test Name: No Re-Keying Test
+Date/Time: 2015-5-23 20:4
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 5e-06
+10 & 1.9e-05
+100 & 0.000172
+1000 & 0.001655
+10000 & 0.020248
+100000 & 0.16113
+1000000 & 1.57319
+
+===============================================================
+
+Test Name: No RC4 Stream Generation Test
+Date/Time: 2015-5-23 20:4
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 5e-06
+10 & 1.2e-05
+100 & 0.000108
+1000 & 0.001075
+10000 & 0.01055
+100000 & 0.112356
+1000000 & 1.02378
+
+===============================================================
+
+Test Name: Static Key Test
+Date/Time: 2015-5-23 20:4
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 4e-06
+10 & 1.9e-05
+100 & 0.000192
+1000 & 0.00193
+10000 & 0.022401
+100000 & 0.183188
+1000000 & 1.83942
+
+===============================================================
+
+Test Name: No Histogram Lookup Test
+Date/Time: 2015-5-23 20:4
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 4e-06
+10 & 2e-05
+100 & 0.000189
+1000 & 0.001888
+10000 & 0.018207
+100000 & 0.179686
+1000000 & 1.80032

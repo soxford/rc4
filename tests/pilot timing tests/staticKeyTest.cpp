@@ -68,7 +68,7 @@ int main(int argc, const char *argv[])
 
 
    //initialize Random Number Generation algorithm 
-   RC4Stream::Key::RandomSource randomSource;
+   MT19937_RandomSource randomSource;
 
    //Initialize RNG
    randomSource.initializeRandomNoGen();
