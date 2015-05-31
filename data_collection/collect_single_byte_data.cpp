@@ -13,7 +13,7 @@
 
 //Experimental parameters
 int BATCH_SIZE = (1 << 30); //the number of pages per batch
-int TOTAL_NO_OF_BATCHES = (1 << 5); //The number of batches to be run in this experiment
+int TOTAL_NO_OF_BATCHES = (1 << 6); //The number of batches to be run in this experiment
 int PAGE_LENGTH = 257; //The number of output bytes per page
 
 //function declarations
@@ -27,7 +27,7 @@ int main(int argc, const char *argv[])
         ostringstream oss;
         time_t t = time(0);   // get time now
         struct tm * now = localtime( & t );
-        oss << "./single_byte_data/" << (now->tm_year + 1900) << 'x'
+        oss << "./single_byte_data/" << 'x' <<(now->tm_year + 1900) << 'x'
                                            << (now->tm_mon + 1) << 'x'
                                            <<  now->tm_mday << 'x'
                                            <<  now->tm_hour << 'x'
@@ -38,7 +38,7 @@ int main(int argc, const char *argv[])
         const char* tmpFileName0 = tmp0.c_str(); 
 
         oss.str(string());
-        oss << "./single_byte_data/" << (now->tm_year + 1900) << 'x'
+        oss << "./single_byte_data/" << 'x' << (now->tm_year + 1900) << 'x'
                                            << (now->tm_mon + 1) << 'x'
                                            <<  now->tm_mday << 'x'
                                            <<  now->tm_hour << 'x'
@@ -49,7 +49,7 @@ int main(int argc, const char *argv[])
         const char* tmpFileName1 = tmp1.c_str(); 
 
         oss.str(string());
-        oss << "./single_byte_data/" << (now->tm_year + 1900) << 'x'
+        oss << "./single_byte_data/" << 'x' << (now->tm_year + 1900) << 'x'
                                            << (now->tm_mon + 1) << 'x'
                                            <<  now->tm_mday << 'x'
                                            <<  now->tm_hour << 'x'
