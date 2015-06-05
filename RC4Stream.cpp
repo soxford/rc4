@@ -34,7 +34,7 @@ class RC4Stream
       class Key {
          public:
             static const int KEY_LENGTH = 16; //_key length (no of bytes), 16 is used in TLS
-	    //BREAK ENCAPSULATION TO AVOID COST OF GETTER METHOD CALL (STACK FRAME SET UO OVERHEAD ETC.)
+	        //BREAK ENCAPSULATION TO AVOID COST OF GETTER METHOD CALL (STACK FRAME SET UP OVERHEAD ETC.)
             uint8_t _key[RC4Stream::PERMUTATION_ARRAY_LENGTH]; // invariant _key[i] == _key[i % KEY_LENGTH]
             Key() {}
 
@@ -48,37 +48,37 @@ class RC4Stream
             //Method to set the ith (modulo KEY_LENGTH) byte, loop unravelled to optimise
             virtual void setModuloLength( int i, uint8_t byte ) {
                	i = i & MASK_4; //0 <= i < 16
-		int j = i + 16;
-		int k = i + 32;
-               	_key[i] = byte;
-		_key[j] = byte;
-		i += 48;	// 48 <= i < 62
-		_key[k] = byte;
-		j += 48;
-		_key[i] = byte;
-		k += 48;
-		_key[j] = byte;
-		i += 48;	// 96 <= i < 112
-		_key[k] = byte;
-		j += 48;
-		_key[i] = byte;
-		k += 48;
-		_key[j] = byte;
-		i += 48;	// 144 <= i < 160
-		_key[k] = byte;
-		j += 48;
-		_key[i] = byte;
-		k += 48;
-		_key[j] = byte;
-		i += 48;	// 192 <= i < 208
-		_key[k] = byte;
-		j += 48;
-		_key[i] = byte;
-		k += 48;
-		_key[j] = byte;
-		i += 48;	// 240 <= i < 256
-		_key[k] = byte;
-		_key[i] = byte;
+                int j = i + 16;
+                int k = i + 32;
+                _key[i] = byte;
+                _key[j] = byte;
+                i += 48;	// 48 <= i < 62
+                _key[k] = byte;
+                j += 48;
+                _key[i] = byte;
+                k += 48;
+                _key[j] = byte;
+                i += 48;	// 96 <= i < 112
+                _key[k] = byte;
+                j += 48;
+                _key[i] = byte;
+                k += 48;
+                _key[j] = byte;
+                i += 48;	// 144 <= i < 160
+                _key[k] = byte;
+                j += 48;
+                _key[i] = byte;
+                k += 48;
+                _key[j] = byte;
+                i += 48;	// 192 <= i < 208
+                _key[k] = byte;
+                j += 48;
+                _key[i] = byte;
+                k += 48;
+                _key[j] = byte;
+                i += 48;	// 240 <= i < 256
+                _key[k] = byte;
+                _key[i] = byte;
 		
 	    }
        
