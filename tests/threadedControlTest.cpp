@@ -60,7 +60,7 @@ void call_from_thread(int tid) {
    RC4Stream rc4Stream;
 
    //initialize Random Number Generation algorithm 
-   RC4Stream::Key::RandomSource randomSource;
+   MT19937_RandomSource randomSource;
 
    randomSource.initializeRandomNoGen();
 

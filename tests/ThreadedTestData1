@@ -1,0 +1,15 @@
+
+===============================================================
+
+Test Name: Control Test with threaded execution of data generation
+Date/Time: 2015-6-8 18:56
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+1 & 6.2e-05
+10 & 0.000225
+100 & 0.001955
+1000 & 0.016102
+10000 & 0.13206
+100000 & 0.911551
+1000000 & 9.08378
