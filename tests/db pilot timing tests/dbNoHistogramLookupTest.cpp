@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: dbControlTest.cpp 
+ * Title: dbNoHistogramLookupTest.cpp 
  * Author: Simon Campbell, <simonhmcampbell@gmail.com>
- * Description: A control test of the doublebyte collection code for comparison to variants for the identification of bottlenecks
+ * Description: A test of the doublebyte collection code with no Histogram lookups.
  * License: GPL
  * Date: June 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -13,7 +13,7 @@
 #include "../../MT19937_RandomSource.cpp"
 
 //variables used in documenting the test
-const char* TEST_NAME = "Double Byte Control Test";
+const char* TEST_NAME = "Double Byte No Histogram Lookup Test";
 const char* FIELDS = "Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes";
 //log_2(the maximum number of bytes collected in any one timing test round)
 int MAX_BYTE_COUNT_POWER =  28;
@@ -102,7 +102,7 @@ int main(int argc, const char *argv[])
       for (int i = 0; i < bytecount; i++) {
          second_byte = rc4Stream.PRGRound();
          //TODO should i & MASK_8 be calculated separately and should i be used or RC4Stream::_i - 1 ?
-         histograms[i & MASK_8][first_byte][second_byte]++; //increment the relevant histogram count
+         //TEST removes histogram lookup histograms[i & MASK_8][first_byte][second_byte]++; //increment the relevant histogram count
          first_byte = second_byte;
       }
 
