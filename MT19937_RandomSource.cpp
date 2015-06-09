@@ -27,6 +27,11 @@ class MT19937_RandomSource : public RC4Stream::Key::RandomSource {
               MT.seed(time(0));
       }
 
+      //Initializes the random number generator with the specified seed
+      void initializeRandomNoGen(uint_fast32_t seed) {
+              MT.seed(seed);
+      }
+
       //generate the random key - assumes the key provided is of length KEY_LENGTH bytes
       void selectRandomKey(RC4Stream::Key &key){
           //get the number of required randome numbers from the twister

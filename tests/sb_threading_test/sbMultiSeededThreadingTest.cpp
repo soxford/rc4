@@ -14,15 +14,15 @@
 #include<thread>
 
 //variables used in documenting the test
-const char* TEST_NAME = "Naive Threading Test, no efforst to provide different seeding for each thread";
+const char* TEST_NAME = "Threading Test with pseudo random seeds for each thread";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
 
 int MAX_LOOPCOUNT = 1000000;
-int NUM_THREADS = 4;
+int NUM_THREADS = 3;
 using namespace std;
 
-void call_from_thread(int tid, string fileNamePrefix) {
+void call_from_thread(int tid, string fileNamePrefix, uint_fast32_t seed) {
     string fileName = fileNamePrefix + to_string(tid);
    //open log file for appending data
    ofstream logFile ;
@@ -60,8 +60,8 @@ void call_from_thread(int tid, string fileNamePrefix) {
 
    //initialize Random Number Generation algorithm 
    MT19937_RandomSource randomSource;
-
-   randomSource.initializeRandomNoGen();
+   //use the thread's specified seed 
+   randomSource.initializeRandomNoGen(seed);
 
    //variables for measuring clock usage
    struct timespec begin, end;
@@ -113,9 +113,12 @@ int main(int argc, const char *argv[])
       cout << "Usage: Enter file name for storing test data" << endl;
       return 1;
    }
+   //initialize a prng for selection of seeds for each thread
+   mt19937 MT (time(0));
+
           
    for (int i = 0; i < NUM_THREADS; i++) { 
-      t[i] = thread(call_from_thread, i, fileName);
+      t[i] = thread(call_from_thread, i, fileName, MT());
    }
 
    for (int i = 0; i < NUM_THREADS; i++){
