@@ -98,7 +98,7 @@ int main(int argc, const char *argv[])
       }
 
       end = clock();
-      time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+      time_spent = ((double)(end - begin)) / CLOCKS_PER_SEC;
       //report time_spent
       logFile << loopcount << " & " << time_spent << endl;
    }
