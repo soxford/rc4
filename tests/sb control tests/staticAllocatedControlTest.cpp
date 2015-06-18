@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Title: noRe-KeyingTest.cpp
- * Author: Simon Campbell, <simonhmcampbell@gmai.com>
- * Description: A test without re-keying the rc4 cipher for each stream output to compare against the control test and identify bottelnecks
+ * Title: controlTest.cpp 
+ * Author: Simon Campbell, <simonhmcampbell@gmail.com>
+ * Description: A control test for comparison to variants for the identification of bottlenecks, histograms are a global variable.
  * License: GPL
  * Date: April 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -11,12 +11,11 @@
 #include <fstream>
 #include <ctime>
 #include "../../MT19937_RandomSource.cpp"
+
 #define STREAM_OUTPUT_LENGTH 257
-
 //variables used in documenting the test
-const char* TEST_NAME = "No Re-Keying Test";
+const char* TEST_NAME = "Control Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
-
 //log_2(the maximum number of pages collected in any one timing test round)
 int MAX_PAGE_COUNT_POWER =  20;
 long histograms[STREAM_OUTPUT_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH]; //TODO consider potential for cache misses with this data structure, perhaps buffer output?
@@ -71,13 +70,6 @@ int main(int argc, const char *argv[])
 
    randomSource.initializeRandomNoGen();
 
-   //choose a key and schedule the key but never reschedule the key
-   //random key generation
-   randomSource.selectRandomKey(key);
-   
-   //rekey
-   rc4Stream.keySchedule(key);
-
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
@@ -94,11 +86,11 @@ int main(int argc, const char *argv[])
       //loop to generate multiple stream outputs
       for (int i = 0; i < loopcount; i++) {
         
-        //random key generation still included even though the key is not reset to compare precisely the rekeying step to the control test
+        //random key generation
         randomSource.selectRandomKey(key);
          
-        //TEST rekey is not done in this test
-        //rc4Stream.keySchedule(key);
+        //rekey
+        rc4Stream.keySchedule(key);
          
         //run RC4 stream algorithm and collect output in histogram counters
         for (int i = 0; i < STREAM_OUTPUT_LENGTH; i++) {
@@ -107,7 +99,7 @@ int main(int argc, const char *argv[])
       }
 
       end = clock();
-      time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+      time_spent = ((double)(end - begin)) / CLOCKS_PER_SEC;
       //report time_spent
       logFile << "2^{" << pageCountPower << '}' << " & " << time_spent << endl;
    }

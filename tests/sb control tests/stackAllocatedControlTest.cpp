@@ -16,8 +16,8 @@
 const char* TEST_NAME = "Control Test";
 const char* FIELDS = "Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)";
 int STREAM_OUTPUT_LENGTH = 257;
-
-int MAX_LOOPCOUNT = 1000000;
+//log_2(the maximum number of pages collected in any one timing test round)
+int MAX_PAGE_COUNT_POWER =  20;
 
 using namespace std;
 
@@ -73,13 +73,14 @@ int main(int argc, const char *argv[])
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
-   
+   int loopcount;
    //record test data
    logFile << "Test Data:" << endl;
    logFile << FIELDS << endl;
 
    //try various loop counts to compare speed
-   for (int loopcount = 1; loopcount <= MAX_LOOPCOUNT; loopcount*=10) {
+   for (int pageCountPower = 8; pageCountPower <= MAX_PAGE_COUNT_POWER; pageCountPower+=3) {
+       loopcount = (1 << pageCountPower);
       begin = clock();
 
       //loop to generate multiple stream outputs
@@ -100,7 +101,7 @@ int main(int argc, const char *argv[])
       end = clock();
       time_spent = ((double)(end - begin)) / CLOCKS_PER_SEC;
       //report time_spent
-      logFile << loopcount << " & " << time_spent << endl;
+      logFile << "2^{" << pageCountPower << '}' << " & " << time_spent << endl;
    }
 
    //close the file and return

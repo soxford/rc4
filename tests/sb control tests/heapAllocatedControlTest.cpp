@@ -15,7 +15,7 @@ THIS CODE WILL NOT COMPILE, CLASS RC4Stream AND ITS INNER CLASSES HAVE BEEN REFA
 #include "../../MT19937_RandomSource.cpp"
 
 int outputLength = 257;
-int MAX_LOOPCOUNT = 10000000;
+int MAX_PAGE_COUNT_POWER = 20;
 
 using namespace std;
 
@@ -70,9 +70,10 @@ int main(int argc, const char *argv[])
    //variables for measuring clock usage
    clock_t begin, end;
    double time_spent;
-
+    int loopcount;
    //try various loop counts to compare speed
-   for (int loopcount = 1; loopcount <= MAX_LOOPCOUNT; loopcount*=10) {
+   for (int pageCountPower = 8; pageCountPower <= MAX_PAGE_COUNT_POWER; pageCountPower+=3) {
+       loopcount = (1 << pageCountPower);
       begin = clock();
 
       //loop to generate multiple stream outputs
@@ -93,7 +94,7 @@ int main(int argc, const char *argv[])
       end = clock();
       time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
       //report time_spent
-      logFile << "Time spent in sampling loop with loopcount " << loopcount << " in seconds: " << scientific << time_spent << endl;
+      logFile << "Time spent in sampling loop with loopcount " << "2^{" << pageCountPower << '}' << " in seconds: " << scientific << time_spent << endl;
    }
 
    //clean up

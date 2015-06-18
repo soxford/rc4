@@ -1,0 +1,66 @@
+
+===============================================================
+
+Test Name: Control Test
+Date/Time: 2015-6-18 12:29
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+2^{8} & 0.001786
+2^{11} & 0.014121
+2^{14} & 0.09658
+2^{17} & 0.74037
+2^{20} & 5.88664
+
+===============================================================
+
+Test Name: No Re-Keying Test
+Date/Time: 2015-6-18 12:29
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+2^{8} & 0.001449
+2^{11} & 0.01075
+2^{14} & 0.083946
+2^{17} & 0.673243
+2^{20} & 5.38382
+
+===============================================================
+
+Test Name: No RC4 Stream Generation Test
+Date/Time: 2015-6-18 12:29
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+2^{8} & 0.000695
+2^{11} & 0.005581
+2^{14} & 0.044465
+2^{17} & 0.354847
+2^{20} & 2.85731
+
+===============================================================
+
+Test Name: Static Key Test
+Date/Time: 2015-6-18 12:29
+Length of each RC4 stream in bytes: 257
+Test Data:
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+2^{8} & 0.00114
+2^{11} & 0.009521
+2^{14} & 0.072781
+2^{17} & 0.580082
+2^{20} & 4.6531
+
+===============================================================
+
+Test Name: No Histogram Lookup Test
+Date/Time: 2015-6-18 12:29
+Length of each RC4 stream in bytes: 257
+Test Data:
+Number of RC4 Streams & Time Spent Initializing and Generating RC4 Streams (s)
+2^{8} & 0.001162
+2^{11} & 0.009497
+2^{14} & 0.074053
+2^{17} & 0.591798
+2^{20} & 4.74762
