@@ -1,0 +1,115 @@
+
+===============================================================
+
+Test Name: Double Byte Control Test
+Date/Time: 2015-6-15 16:13
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+2^{16} & 0
+2^{19} & 0.02
+2^{22} & 0.1
+2^{25} & 0.81
+2^{28} & 6.47
+
+===============================================================
+
+Test Name: Double Byte No Histogram Lookup
+Date/Time: 2015-6-18 12:25
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+2^{16} & 0
+2^{19} & 0
+2^{22} & 0.02
+2^{25} & 0.11
+2^{28} & 0.83
+
+===============================================================
+
+Test Name: Double Byte No RC4 Generation Test
+Date/Time: 2015-6-18 12:52
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+2^{16} & 0
+2^{19} & 0
+2^{22} & 0.01
+2^{25} & 0.03
+2^{28} & 0.28
+
+===============================================================
+
+Test Name: Double Byte Control Test
+Date/Time: 2015-6-18 13:8
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+2^{16} & 0
+2^{19} & 0.02
+2^{22} & 0.04
+2^{25} & 0.36
+2^{28} & 2.68
+
+===============================================================
+
+Test Name: Double Byte Test with histogram i index size reduced to 4
+Date/Time: 2015-6-18 13:11
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+2^{16} & 0
+2^{19} & 0.01
+2^{22} & 0.05
+2^{25} & 0.35
+2^{28} & 2.65
+
+===============================================================
+
+Test Name: Double Byte Test with histogram i index size reduced to 1
+Date/Time: 2015-6-18 14:46
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+2^{16} & 0
+2^{19} & 0
+2^{22} & 0.04
+2^{25} & 0.22
+2^{28} & 1.65
+
+===============================================================
+
+Test Name: Double Byte Test with histogram i index size reduced to 1 and j index size 8
+Date/Time: 2015-6-18 15:28
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+
+===============================================================
+
+Test Name: Double Byte Test with histogram i index size reduced to 1 and j index size 8
+Date/Time: 2015-6-18 15:40
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+2^{16} & 0
+2^{19} & 0.01
+2^{22} & 0.04
+2^{25} & 0.21
+2^{28} & 1.61
+
+===============================================================
+
+Test Name: Double Byte Test with histogram no i index and j index size 8
+Date/Time: 2015-6-18 16:14
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+2^{16} & 0.01
+2^{19} & 0
+2^{22} & 0.03
+2^{25} & 0.23
+2^{28} & 1.68
+
+===============================================================
+
+Test Name: Double Byte Test with histogram i index size reduced to 4 and data selectively stored
+Date/Time: 2015-6-18 16:42
+Test Data:
+Number of RC4 Bytes & Time Spent Initializing and Generating and Recording histograms from the RC4 Bytes
+2^{16} & 0
+2^{19} & 0
+2^{22} & 0.03
+2^{25} & 0.21
+2^{28} & 1.6
