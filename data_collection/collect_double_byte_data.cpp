@@ -248,8 +248,8 @@ void dumpDoubleByteData(std::ostream &outStream, uint64_t histograms[][RC4Stream
 
 	    //print intstructions on using the data histograms
 	    outStream << endl << "%Print out instructions for using the data histograms/probabilities" << endl
-		      	      << "fprintf(\"experimentalCondProbs_i0k_id" << proc_id << "(i+1,k+1) contains the experimental probability conditioned on the value of i for (i, 0x00, k), i.e. the event the the rc4 stream output 0x00 followed by k given initial partial state i.\\n\");" << endl
-		      	      << "fprintf(\"experimentalCondProbs_i255k_id" << proc_id << "(i+1, k+1) contains the experimental probability conditioned on the value of i for (i, 0xff, k), i.e. the event the the rc4 stream output 0xff followed by k given initial partial state i.\\n\");" << endl
-		      	      << "fprintf(\"experimentalCondProbs_ij255_id" << proc_id << "(i+1, j+1) contains the experimental probability conditioned on the value of i for (i, j, 0xff), i.e. the event the the rc4 stream output j followed by 0xff given initial partial state i.\\n\");" << endl
-		      	      << "fprintf(\"experimentalProbsDefault_id" << proc_id << "(j+1, k+1) contains the experimental probability (NOT conditioned on the value of i) for (i, j, k) for all i. i.e. the event the the rc4 stream output j followed by k regardless of the initial partial state i.\\n\");";
+		      	      << "fprintf(\'experimentalCondProbs_i0k_id" << proc_id << "(i+1,k+1) contains the experimental probability conditioned on the value of i for (i, 0x00, k), i.e. the event the the rc4 stream output 0x00 followed by k given initial partial state i.\\n\');" << endl
+		      	      << "fprintf(\'experimentalCondProbs_i255k_id" << proc_id << "(i+1, k+1) contains the experimental probability conditioned on the value of i for (i, 0xff, k), i.e. the event the the rc4 stream output 0xff followed by k given initial partial state i.\\n\');" << endl
+		      	      << "fprintf(\'experimentalCondProbs_ij255_id" << proc_id << "(i+1, j+1) contains the experimental probability conditioned on the value of i for (i, j, 0xff), i.e. the event the the rc4 stream output j followed by 0xff given initial partial state i.\\n\');" << endl
+		      	      << "fprintf(\'experimentalProbsDefault_id" << proc_id << "(j+1, k+1) contains the experimental probability (NOT conditioned on the value of i) for (i, j, k) for all i. i.e. the event the the rc4 stream output j followed by k regardless of the initial partial state i.\\n\');";
 }
