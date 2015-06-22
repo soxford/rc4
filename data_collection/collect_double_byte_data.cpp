@@ -4,7 +4,7 @@
  * Description: Will produce histograms indexed by the internal state of the RC4 Stream (_i) and then indexed by the value of the the byte output and the value of the successor byte. The biases being investigated are longer term and require _permutationArray and _j to be "random" so we will ignore the first 2^10 bytes per AF:13. The quantity of bytes required is tbd but the requirement will be to get a long stream (perhaps 2^40 bytes for each key as per AF:13)
  * Date: June 2015
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-#include <iostream> //TODO remove when testing done
+#include <iostream>
 #include <string>
 #include <sstream>
 #include <ctime>
@@ -15,10 +15,9 @@
 //Define the number of histograms to collect as per dbSelectiveHistArcTest
 #define HISTOGRAM_COUNT 4
 
-//TODO change single byte code to meet double byte requirements once any testing is complete.
 //Experimental parameters
-int64_t BATCH_SIZE = ( ((int64_t)1) << 34); //the number of bytes per batch TODO will be (1 << 40) or (1 << 38)
-int32_t TOTAL_NO_OF_BATCHES = (1 << 1); //The number of batches to be run in this experiment TODO will be (1 << 10) ?
+int64_t BATCH_SIZE = ( ((int64_t)1) << 40); //the number of bytes per batch 
+int32_t TOTAL_NO_OF_BATCHES = (1 << 6); //The number of batches to be run in this experiment 
 
 //allocate space to hold table of results 4x256x256 as per dbSelectiveHistArcTest
 uint64_t histograms[HISTOGRAM_COUNT][RC4Stream::PERMUTATION_ARRAY_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH]; 
@@ -99,7 +98,6 @@ int main(int argc, char *argv[])
 		seeder();
 	}
 	seed = seeder();
-	//TODO remove cout post testing
 	cout << "Seed for process " << my_proc_id << ": " << seed << endl;
 	
         //initialize Random Number Generation algorithm 
