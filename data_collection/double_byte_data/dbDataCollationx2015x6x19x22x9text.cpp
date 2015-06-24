@@ -21,7 +21,7 @@ int main(int argc, const char *argv[])
            << "histogram_i0k = histogram_i0k + histogram_i0k_id" << i << ";" << endl
            << "histogram_i255k = histogram_i255k + histogram_i255k_id" << i << ";" << endl
            << "histogram_ij255 = histogram_ij255 + histogram_ij255_id" << i << ";" << endl
-           << "histogramDefault = histogramDefault + histogramDefault_id0" << i << ";" << endl;
+           << "histogramDefault = histogramDefault + histogramDefault_id" << i << ";" << endl;
       cout << "clearvars -except histogram_i0k histogram_i255k histogram_ij255 histogramDefault numberOfBytesCollectedPerI;" << endl << endl;
    }
    cout << "numberOfBytesCollectedPerI = numberOfBytesCollectedPerI * " << totalNoOfParallelDataRuns << ";" << endl; 
