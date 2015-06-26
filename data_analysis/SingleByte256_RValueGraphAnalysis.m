@@ -38,7 +38,7 @@ if exist('probs_256_r') == 1
     %keep the box off
     set(ax, 'box', 'off');
     xlabel('RC4 Output Byte Position (r)');
-    ylabel('Experimental c_{r,256-r}');
+    ylabel('Experimental b_{r,256-r}');
     print -depsc SingleByte256_RValueGraph
 else
     fprintf('Load single byte data values for probs_256_r\n');

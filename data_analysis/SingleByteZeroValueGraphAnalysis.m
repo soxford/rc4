@@ -38,7 +38,7 @@ if exist('experimentalProbs') == 1
     %keep the box off
     set(ax, 'box', 'off');
     xlabel('RC4 Output Byte Position (r)');
-    ylabel('Experimental c_{r, 0}');
+    ylabel('Experimental b_{r, 0}');
     print -depsc SingleByteZeroValueGraph
 else
     fprintf('Load single byte data values for experimentalProbs\n');
