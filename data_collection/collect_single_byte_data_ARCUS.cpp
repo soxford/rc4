@@ -14,8 +14,8 @@
 #define PAGE_LENGTH 256 //The number of output bytes per page
 #define PAGE_COUNT 2 //The number of pages of output per key
 //Experimental parameters
-uint64_t BATCH_SIZE = (1 << 25 ); //the number of pages per batch
-uint32_t TOTAL_NO_OF_BATCHES = (1 << 1); //The number of batches to be run in this experiment
+uint64_t BATCH_SIZE = (1 << 30 ); //the number of pages per batch
+uint32_t TOTAL_NO_OF_BATCHES = 74; // roughly 2^6.2 The number of batches to be run in this experiment
 uint64_t histograms[PAGE_COUNT][PAGE_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH];
 //function declarations
 void dumpSingleByteData(std::ostream &outStream, uint64_t histograms[][PAGE_LENGTH][RC4Stream::PERMUTATION_ARRAY_LENGTH], uint32_t numberOfBatches, int proc_id);

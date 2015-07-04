@@ -7,10 +7,10 @@
 #SBATCH --job-name=sbstrmcllct
 
 # Walltime limit
-#SBATCH --time=00:10:00
+#SBATCH --time=120:00:00
 
-# Use 1 nodes, each running 16 processes
-#SBATCH --nodes=1
+# Use 8 nodes, each running 16 processes
+#SBATCH --nodes=8
 #SBATCH --ntasks-per-node=16
 
 # Email me at the beginning, end of job and on abortion
