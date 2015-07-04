@@ -70,13 +70,12 @@ for i = 1:samplecount
             % ..., p255) is xi logpi (using einstein summation)
         logCompoundCondProbs = zeros(k, bytePositionCount);
         for messageByte = 0:k-1
-            logCompoundCondProbs(messageByte + 1, :) = sum(sythesisedSample .* log(correctDistributions(xorPermutations(messageByte+1, :) , :) ) );
+            logCompoundCondProbs(messageByte + 1, :) = sum(synthesisedSample .* log2(correctDistributions(xorPermutations(messageByte+1, :) , :) ) );
         end
         
         for bytePosition = 1:bytePositionCount
             tmp = logCompoundCondProbs(:, bytePosition);
-            % get the number of guesses to get the correct message byte (0)
-            % if we use the bayesian/MLE order on the guesses 
+            % get
             [m, n] = size(tmp(tmp >= tmp(1, 1)));
             sumOfGuessesRequired(1, bytePosition) = sumOfGuessesRequired(1, bytePosition) + m;
         end
