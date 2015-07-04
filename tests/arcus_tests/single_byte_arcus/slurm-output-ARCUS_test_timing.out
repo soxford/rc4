@@ -1,0 +1,33 @@
+MPI_HOSTS =  -np 16 -hosts cnode1015 
+Seed for process 13: 4009840967
+Seed for process Seed for process 2: 2421703539
+Seed for process 5: 507264803
+Seed for process 6: 2293405819
+3: 3426861956Seed for process 11: 3833340646
+Seed for process Seed for process 0: 2489259491
+Seed for process 1: 3703733316
+
+Seed for process 4: 3216103152
+Seed for process 7: 2024960934
+Seed for process 8: 3579130749
+Seed for process 9: 1760183095
+Seed for process 12: 4170464194
+Seed for process 15: 1179974006
+14: 1994390455
+Seed for process 10: 3113493045
+Time spent on process 7: 347.79
+Time spent on process 11: 347.81
+Time spent on process 14: 347.86
+Time spent on process 3: 347.96
+Time spent on process 10: 348.05
+Time spent on process 1: 348.29
+Time spent on process 13: 348.28
+Time spent on process 8: 348.14
+Time spent on process 4: 348.65
+Time spent on process 2: 349.39
+Time spent on process 9: 349.43
+Time spent on process 15: 349.63
+Time spent on process 0: 349.74
+Time spent on process 5: 349.72
+Time spent on process 12: 349.88
+Time spent on process 6: 349.94
