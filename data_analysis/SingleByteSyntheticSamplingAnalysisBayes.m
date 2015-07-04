@@ -10,9 +10,9 @@ format longe;
 % Number of byte positions = bytePositionCount
 [bytePositionCount, k] = size(experimentalProbs);
 %base power for each sample size
-basepower = 9;
+basepower = 8;
 %number of sample sizes tested
-samplecount = 1;
+samplecount = 22;
 %get the index of the maximum peak in the distribution of the first byte
 %(i.e. the index that would correctly identify the message byte if we
 %looked for the maximum peak to break the cipher
@@ -20,7 +20,7 @@ samplecount = 1;
 %matrix for collecting results for each synthetic experiment
 averageNoOfGuesses = ones(samplecount, bytePositionCount);
 %Number of synthesised samplings overwhich we will average performance
-noOfSynthesisedSamplings = 10000;
+noOfSynthesisedSamplings = 2000;
 
 %Permutations on cipher stream values produced by XORing with byte values 0
 %-255
