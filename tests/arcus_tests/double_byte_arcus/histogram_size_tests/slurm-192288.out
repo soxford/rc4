@@ -1,0 +1,1 @@
+MPI_HOSTS =  -np 16 -hosts cnode1146 

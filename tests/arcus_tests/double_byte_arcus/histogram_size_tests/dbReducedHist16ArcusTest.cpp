@@ -11,9 +11,9 @@
 #include <fstream>
 #include <ctime>
 #include <mpi.h>
-#include "../../MT19937_RandomSource.cpp"
+#include "../../../../MT19937_RandomSource.cpp"
 //TEST use this to mask for mod 4
-#define MASK_4 0x0f
+#define MASK_4_ 0x0f
 #define HISTOGRAM_I_COUNT 16
 //variables used in documenting the test
 const char* TEST_NAME = "Double Byte Test with histogram i index size reduced to 16";
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
          second_byte = rc4Stream.PRGRound();
          //TEST use MASK_2 instead of MASK_8 as the i index has size 4
          //TEST histograms[i & MASK_8][first_byte][second_byte]++; //increment the relevant histogram count
-         histograms[i & MASK_4][first_byte][second_byte]++; //increment the relevant histogram count
+         histograms[i & MASK_4_][first_byte][second_byte]++; //increment the relevant histogram count
          first_byte = second_byte;
       }
 

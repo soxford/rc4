@@ -11,7 +11,7 @@
 #include <fstream>
 #include <ctime>
 #include <mpi.h>
-#include "../../MT19937_RandomSource.cpp"
+#include "../../../../MT19937_RandomSource.cpp"
 //TEST use this to mask for mod 4
 #define MASK_8 0xff
 #define HISTOGRAM_I_COUNT 256
