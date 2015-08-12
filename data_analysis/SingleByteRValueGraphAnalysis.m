@@ -3,28 +3,24 @@
 %to these positions and values 
 
 %check experimentalProbs exists
-if exist('probs_r') == 1
+if exist('biases_rmod256_page1') == 1
     % produce the X values, these are the byte positions (1 - 256)
     X = 1:256;
 
     %plot the X values against the Experimental probabilities for the byte
     %positions 1-256 for rc4 output value r in row output r
-    plot(X, probs_r(:, 1));
+    plot(X, biases_rmod256_page1(:, 1));
     % Now convert the existing tick marks.
-    % Define the denominator we want to use.
-    baseDenominator = 256;
-    power = 2;
-    denominator = baseDenominator^power;
+    % Define the denominator we want to use
     % For R2014a and earlier:
     ax = gca;
-    New_Y_Tick = [probs_r(2,1) 1/baseDenominator probs_r(6 , 1)];
+    New_Y_Tick = [biases_rmod256_page1(2,1) 0 biases_rmod256_page1(6,1)];
     set(ax,'YTick',New_Y_Tick)
-    New_Y_Tick_Numerators = New_Y_Tick * denominator;
     
     % Now make up a cell array of all the tick labels.
-    y_tick_labels{1} = sprintf('%.6f', New_Y_Tick_Numerators(1) - baseDenominator);
+    y_tick_labels{1} = sprintf('%.3f', New_Y_Tick(1));
     y_tick_labels{2} = sprintf('0');
-    y_tick_labels{3} = sprintf('%.6f', New_Y_Tick_Numerators(3) - baseDenominator);
+    y_tick_labels{3} = sprintf('%.3f', New_Y_Tick(3));
 
     % Apply our tick marks to the plot.
     set(ax,'YTickLabel',y_tick_labels);
@@ -36,8 +32,8 @@ if exist('probs_r') == 1
     set(ax,'ygrid','on');
     %keep the box off
     set(ax, 'box', 'off');
-    xlabel('RC4 Output Byte Position (r)');
-    ylabel('Experimental b_{r,r}');
+    xlabel('RC4 Output Byte Position ($r$)','Interpreter','latex');
+    ylabel('Experimental $b_r^r$ value','Interpreter','latex');
     print -depsc SingleByteRValueGraph
 else
     fprintf('Load single byte data values for probs_r\n');

@@ -3,27 +3,23 @@
 %to these positions and values 
 
 %check experimentalProbs exists
-if exist('probs_256_r') == 1
+if exist('biases_256_rmod256_page1') == 1
     % produce the X values, these are the byte positions (1 - 256)
     X = 1:256;
 
     %plot the X values against the Experimental probabilities for the byte
     %positions 1-256 for rc4 output value r in row output r
-    plot(X, probs_256_r(:, 1));
+    plot(X, biases_256_rmod256_page1(:, 1));
     % Now convert the existing tick marks.
-    % Define the denominator we want to use.
-    baseDenominator = 256;
-    power = 2;
-    denominator = baseDenominator^power;
+
     % For R2014a and earlier:
     ax = gca;
-    New_Y_Tick = [probs_256_r(1,1) 1/baseDenominator  probs_256_r(128,1) probs_256_r(112,1) probs_256_r(96,1) probs_256_r(80,1) probs_256_r(64,1) probs_256_r(48,1) probs_256_r(32,1) probs_256_r(16,1) ];
-    set(ax,'YTick',New_Y_Tick)
-    New_Y_Tick_Numerators = New_Y_Tick * denominator;
+    New_Y_Tick = [biases_256_rmod256_page1(1,1) 0  biases_256_rmod256_page1(128,1) biases_256_rmod256_page1(112,1) biases_256_rmod256_page1(96,1) biases_256_rmod256_page1(80,1) biases_256_rmod256_page1(64,1) biases_256_rmod256_page1(48,1) biases_256_rmod256_page1(32,1) biases_256_rmod256_page1(16,1) ];
+    set(ax,'YTick',New_Y_Tick);
     
     % Now make up a cell array of all the tick labels.
-    for k = 1:length(New_Y_Tick_Numerators)
-        y_tick_labels{k} = sprintf('%.6f ', New_Y_Tick_Numerators(k) - baseDenominator);
+    for k = 1:length(New_Y_Tick)
+        y_tick_labels{k} = sprintf('%.3f ', New_Y_Tick(k));
     end
     y_tick_labels{2} = sprintf('0');
     % Apply our tick marks to the plot.
@@ -37,9 +33,9 @@ if exist('probs_256_r') == 1
     set(ax,'xgrid','on');
     %keep the box off
     set(ax, 'box', 'off');
-    xlabel('RC4 Output Byte Position (r)');
-    ylabel('Experimental b_{r,256-r}');
+    xlabel('RC4 Output Byte Position ($r$)', 'Interpreter', 'latex');
+    ylabel('Experimental $b^r_{256-r}$', 'Interpreter', 'latex');
     print -depsc SingleByte256_RValueGraph
 else
-    fprintf('Load single byte data values for probs_256_r\n');
+    fprintf('Load single byte data values for biases_256_rmod256_page1\n');
 end
