@@ -6,6 +6,7 @@ load('ArcusTestData1.mat')
     
     % For R2014a and earlier:
     ax = gca;
+    set(ax,'TickLabelInterpreter', 'tex');
     %limit the x axis
     xlim([-1 8]);
     ylim([0 8]);

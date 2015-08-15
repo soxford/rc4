@@ -17,6 +17,7 @@ if exist('experimentalBiasesPage1') == 1
     denominator = baseDenominator^power;
     % For R2014a and earlier:
     ax = gca;
+    set(ax,'TickLabelInterpreter', 'tex');
     New_Y_Tick_Numerators = [0 0.242811 0.351089 1.337057];
     set(ax,'YTick',New_Y_Tick_Numerators)
 

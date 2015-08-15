@@ -14,6 +14,7 @@ if exist('experimentalBiasesPage2') == 1
     ylim([-0.015 0.015]);
     %set the x axis tick marks
     set(ax, 'Xtick', [0:32:256]);
+    set(ax,'TickLabelInterpreter', 'tex');
     %turn on the y grid lines
     set(ax,'ygrid','on');
     legend({'Experimental Estimate', '$99.99\%$ Confidence Interval'},'Interpreter','latex');

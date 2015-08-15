@@ -5,6 +5,7 @@ if exist('biases_i0k') == 1
     plot(0:255, circshift(diag(circshift(biases_i0k, -2, 2)), 1, 1), 0:255, circshift(diag(circshift(biases_conf_int_lo_i0k, -2, 2)),1,1), '--r',0:255, circshift(diag(circshift(biases_conf_int_hi_i0k, -2, 2)),1,1), '--r')
     % For R2014a and earlier:
     ax = gca;
+    set(ax,'TickLabelInterpreter', 'tex');
 
     %limit the x axis
     xlim([-5 260]);
