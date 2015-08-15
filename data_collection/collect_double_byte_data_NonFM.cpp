@@ -196,7 +196,7 @@ void dumpDoubleByteData(std::ostream &outStream, uint64_t histograms[][RC4Stream
 
 	    //Third Histogram
 	    outStream << endl << "% The entry histogrami128k[i][k] is the count of occurences of (i, 0x80, k)" << endl
-            	      << "histogrami128k_id" << proc_id << " = [ " << endl;
+            	      << "histogram_i128k_id" << proc_id << " = [ " << endl;
             for(int j = 0; j < RC4Stream::PERMUTATION_ARRAY_LENGTH; j++) {
                 outStream << '\t';
                 for(int k = 0; k < RC4Stream::PERMUTATION_ARRAY_LENGTH; k++){
