@@ -14,7 +14,7 @@ if exist('averageNoOfGuessesPage1') == 1
     
     % For R2014a and earlier:
     ax = gca;
-    plot(1:512, [Guesses3a Guesses3b], 1:512, [Guesses30a Guesses30b])
+    plot(1:512, [Guesses30a Guesses30b], 1:512, [Guesses3a Guesses3b])
     %limit the x axis
     xlim([-5 517]);
     ylim([8 50]);

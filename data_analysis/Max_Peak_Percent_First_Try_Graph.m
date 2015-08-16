@@ -33,7 +33,7 @@ if exist('maxPeakPercentCorrectOnFirstTryPage1') == 1
     %turn on the y grid lines
     set(ax,'ygrid','on');
     set(ax,'xgrid','on');
-    legend({'Percentage Success $\geq 50\%$', 'Percentage Success $\geq 99\%$'},'Interpreter','latex', 'Location', 'east');
+    legend({'Percentage Success $\geq 50\%$', 'Percentage Success $\geq 99\%$'},'Interpreter','latex', 'Location', 'southeast');
     %keep the box off
     set(ax, 'box', 'off');
     xlabel('RC4 Output Byte Position ($r$)','Interpreter','latex');
