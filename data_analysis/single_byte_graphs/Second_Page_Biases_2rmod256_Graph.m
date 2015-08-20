@@ -8,6 +8,7 @@ if exist('experimentalBiasesPage2') == 1
     plot(257:512, biases_2rmod256_page2(1:256))
     % For R2014a and earlier:
     ax = gca;
+    set(ax,'TickLabelInterpreter', 'tex');
 
     %limit the x axis
     xlim([250 517]);

@@ -11,6 +11,7 @@ if exist('experimentalBiasesPage2') == 1
 
     %limit the x axis
     xlim([-5 260]);
+    set(ax,'TickLabelInterpreter', 'tex');
     %set the x axis tick marks
     set(ax, 'Xtick', [0:32:256]);
     %turn on the y grid lines

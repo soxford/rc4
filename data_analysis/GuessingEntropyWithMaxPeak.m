@@ -11,7 +11,7 @@
 %position.
 function [logCiphertextCounts,averageNoOfGuesses] = GuessingEntropyWithMaxPeak(obsSingleByteDistributions, samplecount)
 %Number of synthesised samplings overwhich we will average performance
-noOfSynthesisedSamplings = 15000;
+noOfSynthesisedSamplings = 30000;
 %get the (assumed) correct distributions for each byte position
 correctDistributions = obsSingleByteDistributions.';
 % Number of byte positions = bytePositionCount
