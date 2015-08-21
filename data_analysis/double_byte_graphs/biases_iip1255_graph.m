@@ -10,12 +10,12 @@ if exist('biases_ij255') == 1
 
     %limit the x axis
     xlim([-5 260]);
-    %ylim([-0.015 0.015]);
+    ylim([-1.2 1.2]);
     %set the x axis tick marks
     set(ax, 'Xtick', [0:32:256]);
     %turn on the y grid lines
     set(ax,'ygrid','on');
-    legend({'Experimental Estimate', '$99.99\%$ Confidence Interval'},'Interpreter','latex', 'Location','west');
+    legend({'Experimental Estimate', '$99.99\%$ Confidence Interval'},'Interpreter','latex', 'Location','southeast');
     %keep the box off
     set(ax, 'box', 'off');
     xlabel('Value of $i$','Interpreter','latex');
