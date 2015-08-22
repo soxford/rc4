@@ -12,7 +12,7 @@ if exist('experimentalBiasesPage2') == 1
     %limit the x axis
     xlim([250 517]);
     ylim([-0.04 0.012]);
-    set(ax,'TickLabelInterpreter', 'tex');
+    set(ax,'TickLabelInterpreter', 'latex');
     %set the x axis tick marks
     set(ax, 'Xtick', [256:32:512]);
     %turn on the y grid lines

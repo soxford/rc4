@@ -5,18 +5,21 @@
 %check experimentalProbs exists
 if exist('experimentalBiasesPage2') == 1
     %Plot the values including the confidence intervals
-    plot(byteVals, experimentalBiasesPage2(3,:), byteVals, experimentalBiasesConfIntLoBoundPage2(3,:), '--r', byteVals, experimentalBiasesConfIntHiBoundPage2(3,:), '--r')
+    h=plot(byteVals, experimentalBiasesPage2(3,:))
+    hold
+    plot(byteVals, experimentalBiasesConfIntLoBoundPage2(3,:), '--r', byteVals, experimentalBiasesConfIntHiBoundPage2(3,:), '--r')
     % For R2014a and earlier:
     ax = gca;
 
     %limit the x axis
     xlim([-5 260]);
-    set(ax,'TickLabelInterpreter', 'tex');
+    set(ax,'TickLabelInterpreter', 'latex');
     %set the x axis tick marks
     set(ax, 'Xtick', [0:32:256]);
     %turn on the y grid lines
     set(ax,'ygrid','on');
     legend({'Experimental Estimate', '$99.99\%$ Confidence Interval'},'Interpreter','latex');
+    uistack(h,'top')
     %keep the box off
     set(ax, 'box', 'off');
     xlabel('RC4 Output Byte Value ($a$)','Interpreter','latex');

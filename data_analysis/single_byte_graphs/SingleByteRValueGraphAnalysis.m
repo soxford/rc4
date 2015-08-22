@@ -14,7 +14,7 @@ if exist('biases_rmod256_page1') == 1
     % Define the denominator we want to use
     % For R2014a and earlier:
     ax = gca;
-    set(ax,'TickLabelInterpreter', 'tex');
+    set(ax,'TickLabelInterpreter', 'latex');
     New_Y_Tick = [biases_rmod256_page1(2,1) 0 biases_rmod256_page1(6,1)];
     set(ax,'YTick',New_Y_Tick)
     

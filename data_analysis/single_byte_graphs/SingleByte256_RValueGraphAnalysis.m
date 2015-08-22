@@ -14,7 +14,7 @@ if exist('biases_256_rmod256_page1') == 1
 
     % For R2014a and earlier:
     ax = gca;
-    set(ax,'TickLabelInterpreter', 'tex');
+    set(ax,'TickLabelInterpreter', 'latex');
     New_Y_Tick = [biases_256_rmod256_page1(1,1) 0  biases_256_rmod256_page1(128,1) biases_256_rmod256_page1(112,1) biases_256_rmod256_page1(96,1) biases_256_rmod256_page1(80,1) biases_256_rmod256_page1(64,1) biases_256_rmod256_page1(48,1) biases_256_rmod256_page1(32,1) biases_256_rmod256_page1(16,1) ];
     set(ax,'YTick',New_Y_Tick);
     

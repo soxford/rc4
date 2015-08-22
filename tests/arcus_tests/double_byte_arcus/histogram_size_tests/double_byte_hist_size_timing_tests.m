@@ -6,7 +6,7 @@ load('ArcusTestData1.mat')
     
     % For R2014a and earlier:
     ax = gca;
-    set(ax,'TickLabelInterpreter', 'tex');
+    set(ax,'TickLabelInterpreter', 'latex');
     %limit the x axis
     xlim([-1 8]);
     ylim([0 8]);
@@ -18,6 +18,6 @@ load('ArcusTestData1.mat')
     set(ax,'xgrid','on');
     %keep the box off
     set(ax, 'box', 'off');
-    xlabel('Histogram[x][256][256] x-Dimension size (log scale)');
-    ylabel('Test Time (s)');
+    xlabel('$x$, for histogram of dimensions $x \times 256 \times 256$  (log scale)', 'Interpreter', 'latex');
+    ylabel('Test Time (s)', 'Interpreter', 'latex');
     print -depsc ArcusTestData1
