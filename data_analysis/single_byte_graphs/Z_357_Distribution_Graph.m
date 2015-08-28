@@ -13,6 +13,10 @@ if exist('experimentalBiasesPage2') == 1
     xlim([-5 260]);    
     ylim([-0.015 0.015]);
     set(ax,'TickLabelInterpreter', 'latex');
+    figureHandle = gcf;
+    %# make all text in the figure to size 16 and bold
+    set(findall(figureHandle,'type','text'),'fontSize',16)
+    set(ax,'FontSize',16)
     %set the x axis tick marks
     set(ax, 'Xtick', [0:32:256]);
     %turn on the y grid lines

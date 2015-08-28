@@ -9,7 +9,10 @@ if exist('biases_i255k') == 1
     % For R2014a and earlier:
     ax = gca;
     set(ax,'TickLabelInterpreter', 'latex');
-
+    figureHandle = gcf;
+    %# make all text in the figure to size 14 and bold
+    set(findall(figureHandle,'type','text'),'fontSize',16)
+    set(ax,'FontSize',16)
     %limit the x axis
     xlim([-5 260]);
     ylim([-1.2 1.2]);

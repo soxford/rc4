@@ -8,13 +8,17 @@ if exist('experimentalBiasesPage2') == 1
     plot(byteVals, experimentalBiasesPage2(250,:), byteVals, experimentalBiasesConfIntLoBoundPage2(250,:), '--r', byteVals, experimentalBiasesConfIntHiBoundPage2(250,:), '--r')
     % For R2014a and earlier:
     ax = gca;
-
+    
     %limit the x axis
     xlim([-5 260]);
     ylim([-0.015 0.015]);
     %set the x axis tick marks
     set(ax, 'Xtick', [0:32:256]);
     set(ax,'TickLabelInterpreter', 'latex');
+    figureHandle = gcf;
+    %# make all text in the figure to size 16 and bold
+    set(findall(figureHandle,'type','text'),'fontSize',16)
+    set(ax,'FontSize',16)
     %turn on the y grid lines
     set(ax,'ygrid','on');
     legend({'Experimental Estimate', '$99.99\%$ Confidence Interval'},'Interpreter','latex');
